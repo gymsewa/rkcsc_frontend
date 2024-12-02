@@ -34,7 +34,7 @@ const ContactUs = () => {
   
   return (
     <div className={`flex mt-5`}>
-      <div className=" bg-blue-100 rounded-3xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center">
+      <div className=" bg-blue-50 rounded-3xl mx-auto px-4 py-8 flex flex-col md:flex-row items-center">
         <div className="md:w-1/2 mb-8 md:mb-0 p-5">
           <span className="text-4xl font-bold mb-4 font-sans text-gray-800">
             Get in touch

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./Nav2.module.css";
 import logo from "../assets/LogoRkcsc.png";
 
-const Navbar = ({setSigninClicked,signinClicked}) => {
+const Navbar = ({ setSigninClicked, signinClicked, navRef }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 938);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -68,10 +68,15 @@ const Navbar = ({setSigninClicked,signinClicked}) => {
       className={`${styles.navRight} ${
         isMenuOpen ? styles.mobileNavRight : ""
       }`}
+      ref={navRef}
     >
-      <li onClick={() => {
-        setSigninClicked(!signinClicked);
-      }}>Login</li>
+      <li
+        onClick={() => {
+          setSigninClicked(!signinClicked);
+        }}
+      >
+        Login
+      </li>
       <button>Sign up</button>
     </div>
   );
@@ -102,11 +107,7 @@ const Navbar = ({setSigninClicked,signinClicked}) => {
 
             {isMenuOpen && (
               <div className={styles.mobileMenu}>
-                <ul
-                  className={` ${
-                    isMenuOpen ? styles.mobileNavList : ""
-                  }`}
-                >
+                <ul className={` ${isMenuOpen ? styles.mobileNavList : ""}`}>
                   <li>Home</li>
                   <li>Services</li>
                   <li>About Us</li>
