@@ -1,10 +1,15 @@
-import logo from './logo.svg';
+import React , {useState} from 'react';
 import './App.css';
+import Landing from './Landing';
+
 
 function App() {
+
+  const [signinClicked , setSigninClicked] = useState(false);
+
   return (
-    <div className="App">
-      RKCSC HOME PAGE
+    <div >
+      <Landing/>
     </div>
   );
 }

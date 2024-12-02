@@ -36,3 +36,261 @@
     transform: rotate(360deg);
   }
 }
+
+
+
+
+/* social icon css */
+
+
+
+
+.social-icon {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: middle;
+}
+.instagram-icon {
+  width: 65px;
+  height: 65px;
+}
+
+.snapchat-icon {
+  height: 68px;
+  width: 68px;
+}
+
+.social-icon:hover .social-icon-bloom {
+  -webkit-animation: background 0.5s ease both;
+  animation: background 0.5s ease both;
+}
+
+.social-icon:hover .social-icon-sparkle-line::before {
+  -webkit-animation: line 1s ease both;
+  animation: line 1s ease both;
+}
+
+.social-icon:hover .social-icon-shape {
+  -webkit-animation: shapeAnimation 1s ease both;
+  animation: shapeAnimation 1s ease both;
+}
+
+.social-icon-bloom {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+  border-width: 0;
+  border-style: solid;
+  will-change: border-width;
+  border-color: #dee0e0;
+}
+
+.social-icon-sparkle-line {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.social-icon-sparkle-line::before {
+  position: absolute;
+  z-index: 1;
+  top: 30%;
+  width: 4px;
+  height: 0;
+  left: calc(50% - 2px);
+  border-radius: 2px;
+  will-change: top, height;
+  content: "";
+}
+.social-icon-sparkle-line:nth-child(1) {
+  -webkit-transform: rotate(40deg);
+  transform: rotate(40deg);
+}
+.social-icon-sparkle-line:nth-child(2) {
+  -webkit-transform: rotate(110deg);
+  transform: rotate(110deg);
+}
+.social-icon-sparkle-line:nth-child(3) {
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.social-icon-sparkle-line:nth-child(4) {
+  -webkit-transform: rotate(250deg);
+  transform: rotate(250deg);
+}
+.social-icon-sparkle-line:nth-child(5) {
+  -webkit-transform: rotate(320deg);
+  transform: rotate(320deg);
+}
+
+.social-icon-shape {
+  z-index: 1;
+  padding: 18px;
+  width: 100%;
+  height: 100%;
+  fill: #0b1a1a;
+  -webkit-transition: fill 0.3s ease;
+  transition: fill 0.3s ease;
+}
+
+/* Twitter */
+.twitter-icon .social-icon-bloom {
+  border-color: #191d1f;
+}
+.twitter-icon .social-icon-sparkle-line::before {
+  background: #191d1f;
+}
+.twitter-icon:hover .social-icon-shape {
+  fill: #191d1f;
+}
+
+/* Twitter */
+.facebook-icon .social-icon-bloom {
+  border-color: #3b5998;
+}
+.facebook-icon .social-icon-sparkle-line::before {
+  background: #3b5998;
+}
+.facebook-icon:hover .social-icon-shape {
+  fill: #3b5998;
+}
+
+/* Instagram */
+.instagram-icon .social-icon-bloom {
+  border-color: #E1306C;
+}
+.instagram-icon .social-icon-sparkle-line::before {
+  background: #E1306C;
+}
+.instagram-icon:hover .social-icon-shape {
+  fill: #E1306C;
+}
+
+/* Snapchat */
+.snapchat-icon .social-icon-bloom {
+  border-color: #D44638;
+}
+.snapchat-icon .social-icon-sparkle-line::before {
+  background: #D44638;
+}
+.snapchat-icon:hover .social-icon-shape {
+  fill: #D44638;
+}
+
+@-webkit-keyframes line {
+  0% {
+    top: 30%;
+    height: 0;
+  }
+  40% {
+    opacity: 1;
+    height: 14px;
+  }
+  100% {
+    opacity: 0;
+    top: 10%;
+    height: 0;
+  }
+}
+
+@keyframes line {
+  0% {
+    top: 30%;
+    height: 0;
+  }
+  40% {
+    opacity: 1;
+    height: 14px;
+  }
+  100% {
+    opacity: 0;
+    top: 10%;
+    height: 0;
+  }
+}
+@-webkit-keyframes shapeAnimation {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  20% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  30% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  60% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  70% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes shapeAnimation {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  20% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  30% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  60% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  70% {
+    -webkit-transform: scale(0.9);
+    transform: scale(0.9);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@-webkit-keyframes background {
+  0% {
+    border-width: 40px; /* half icon width */
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  90% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    border-width: 0;
+  }
+}
+@keyframes background {
+  0% {
+    border-width: 40px;
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+  90% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    border-width: 0;
+  }
+}
