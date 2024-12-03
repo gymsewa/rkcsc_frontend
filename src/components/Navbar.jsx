@@ -1,11 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styles from "./Nav2.module.css";
 import logo from "../assets/LogoRkcsc.png";
+import AppContext from "../AppContext/AppContext";
+import profile from "../assets/userProfile.png";
+import { TiArrowSortedDown } from "react-icons/ti";
 
-const Navbar = ({ setSigninClicked, signinClicked, navRef }) => {
+const Navbar = ({
+  setSigninClicked,
+  signinClicked,
+  isLoggedIn,
+  setISsLoggedIn,
+  setUserSignUp,
+  navRef,
+  userSignUp,
+}) => {
+  const appContext = useContext(AppContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 938);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isSignupDropdownOpen, setIsSignupDropdownOpen] = useState(false);
+  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,6 +43,12 @@ const Navbar = ({ setSigninClicked, signinClicked, navRef }) => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    if (appContext.userInfoVal.sessionId !== null) {
+      setISsLoggedIn(true);
+    }
+  }, [appContext.userInfoVal.sessionId]);
 
   const toggleMenu = () => {
     if (isAnimating) return;
@@ -56,11 +76,56 @@ const Navbar = ({ setSigninClicked, signinClicked, navRef }) => {
     <ul
       className={`${styles.navList} ${isMenuOpen ? styles.mobileNavList : ""}`}
     >
-      <li>Home</li>
-      <li>Services</li>
-      <li>About Us</li>
-      <li>Contact Us</li>
+      <li>
+        <a>Home</a>
+      </li>
+      <li>
+        <a>Services</a>
+      </li>
+      <li>
+        <a>About Us</a>
+      </li>
+      <li>
+        <a>Contact Us</a>
+      </li>
     </ul>
+  );
+
+  const SignupDropdown = () => (
+    <div
+      className={`${styles.signupDropdown} ${
+        isSignupDropdownOpen ? styles.open : ""
+      }`}
+    >
+      <span className="flex justify-center items-center">
+        <span>Sign Up</span>
+        <TiArrowSortedDown />
+      </span>
+      {isSignupDropdownOpen && (
+        <div className={styles.dropdownContent}>
+          <div
+            className={styles.dropdownItem}
+            onClick={() => {
+              console.log("User Signup");
+              setUserSignUp(true);
+              setSigninClicked(true);
+              setIsSignupDropdownOpen(false);
+            }}
+          >
+            User Signup
+          </div>
+          <div
+            className={styles.dropdownItem}
+            onClick={() => {
+              console.log("Member Signup");
+              setIsSignupDropdownOpen(false);
+            }}
+          >
+            Member Signup
+          </div>
+        </div>
+      )}
+    </div>
   );
 
   const renderNavRight = () => (
@@ -68,22 +133,42 @@ const Navbar = ({ setSigninClicked, signinClicked, navRef }) => {
       className={`${styles.navRight} ${
         isMenuOpen ? styles.mobileNavRight : ""
       }`}
-      ref={navRef}
     >
-      <li
-        onClick={() => {
-          setSigninClicked(!signinClicked);
-        }}
-      >
-        Login
-      </li>
-      <button>Sign up</button>
+      {isLoggedIn ? (
+        <>
+          <li
+            onClick={() => {
+              // setSigninClicked(!signinClicked);
+            }}
+          >
+            Hii User
+          </li>
+          <img src={profile} alt="profile" className="h-10 w-10" />
+        </>
+      ) : (
+        <>
+          <li
+            onClick={() => {
+              setSigninClicked(!signinClicked);
+            }}
+          >
+            Login
+          </li>
+          <button
+            onMouseEnter={() => setIsSignupDropdownOpen(true)}
+            onMouseLeave={() => setIsSignupDropdownOpen(false)}
+            className="relative"
+          >
+            <SignupDropdown />
+          </button>
+        </>
+      )}
     </div>
   );
 
   return (
     <>
-      <div className={styles.Navbar}>
+      <div className={styles.Navbar} ref={navRef}>
         <div className="flex justify-center items-center">
           <img src={logo} alt="Logo" className={styles.logo} />
           {!isMobile && <span>Rk Consultancy And CSC Services</span>}

@@ -1,8 +1,8 @@
 import React from 'react'
 
-const HomeSection = ({navRef}) => {
+const HomeSection = ({}) => {
   return (
-    <div ref={navRef} ></div>
+    <div></div>
   )
 }
 

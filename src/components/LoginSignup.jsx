@@ -1,17 +1,35 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./LoginSignup.css";
+import Core from "../core/Core";
 
-const LoginSignup = ({ setSigninClicked, signinClicked }) => {
-  const [isSignup, setIsSignup] = useState(false);
+const LoginSignup = ({
+  setSigninClicked,
+  signinClicked,
+  navRef,
+  setUserSignUp,
+  userSignUp,
+}) => {
+  const { loginEmailPass, signupEmailPass } = Core();
+
+  const [isSignup, setIsSignup] = useState(userSignUp || false);
   const loginCardRef = useRef(null);
+  const fNameInputRef = useRef(null);
+  const phoneInputRef = useRef(null);
+  const emailInputRef = useRef(null);
+  const signupPassInputRef = useRef(null);
+  const userNameInputRef = useRef(null);
+  const loginPassRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
         loginCardRef.current &&
-        !loginCardRef.current.contains(event.target)
+        !loginCardRef.current.contains(event.target) &&
+        navRef.current &&
+        !navRef.current.contains(event.target)
       ) {
         setSigninClicked(false);
+        setUserSignUp(false);
       }
     };
 
@@ -28,6 +46,49 @@ const LoginSignup = ({ setSigninClicked, signinClicked }) => {
 
   const handleLoginClick = () => {
     setIsSignup(false);
+  };
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+
+    console.log("Login button clicked");
+
+    const email = userNameInputRef.current?.value;
+    const password = loginPassRef.current?.value;
+
+    console.log("Email input:", email);
+    console.log("Password input:", password ? "***" : "empty");
+
+    if (email && password) {
+      loginEmailPass(email, password, setSigninClicked);
+    } else {
+      console.error("Email or password is missing");
+    }
+  };
+
+  const handleSignUp = (event) => {
+    event.preventDefault();
+
+    console.log("Signup button clicked");
+
+    const firstName = fNameInputRef.current?.value;
+    const phoneNumber = phoneInputRef.current?.value;
+    const email = emailInputRef.current?.value;
+    const password = signupPassInputRef.current?.value;
+
+    console.log("Signup inputs:", { firstName, phoneNumber, email });
+
+    if (firstName && phoneNumber && email && password) {
+      signupEmailPass(
+        firstName,
+        phoneNumber,
+        email,
+        password,
+        setSigninClicked
+      );
+    } else {
+      console.error("Please fill in all signup fields");
+    }
   };
 
   return (
@@ -75,10 +136,11 @@ const LoginSignup = ({ setSigninClicked, signinClicked }) => {
         >
           <div className="user_forms-login">
             <h2 className="forms_title">Login</h2>
-            <form className="forms_form">
+            <form className="forms_form" onSubmit={handleLogin}>
               <fieldset className="forms_fieldset">
                 <div className="forms_field">
                   <input
+                    ref={userNameInputRef}
                     type="email"
                     placeholder="Email or Phone"
                     className="forms_field-input"
@@ -88,7 +150,8 @@ const LoginSignup = ({ setSigninClicked, signinClicked }) => {
                 </div>
                 <div className="forms_field">
                   <input
-                    type="password"
+                    ref={loginPassRef}
+                    type="text"
                     placeholder="Password"
                     className="forms_field-input"
                     required
@@ -109,10 +172,11 @@ const LoginSignup = ({ setSigninClicked, signinClicked }) => {
           </div>
           <div className="user_forms-signup">
             <h2 className="forms_title">Sign Up</h2>
-            <form className="forms_form">
+            <form className="forms_form" onSubmit={handleSignUp}>
               <fieldset className="forms_fieldset">
                 <div className="forms_field">
                   <input
+                    ref={fNameInputRef}
                     type="text"
                     placeholder="Full Name"
                     className="forms_field-input"
@@ -121,6 +185,7 @@ const LoginSignup = ({ setSigninClicked, signinClicked }) => {
                 </div>
                 <div className="forms_field">
                   <input
+                    ref={phoneInputRef}
                     type="tel"
                     placeholder="Phone"
                     className="forms_field-input"
@@ -129,6 +194,7 @@ const LoginSignup = ({ setSigninClicked, signinClicked }) => {
                 </div>
                 <div className="forms_field">
                   <input
+                    ref={emailInputRef}
                     type="email"
                     placeholder="Email"
                     className="forms_field-input"
@@ -137,7 +203,8 @@ const LoginSignup = ({ setSigninClicked, signinClicked }) => {
                 </div>
                 <div className="forms_field">
                   <input
-                    type="password"
+                    ref={signupPassInputRef}
+                    type="text"
                     placeholder="Password"
                     className="forms_field-input"
                     required
@@ -149,6 +216,7 @@ const LoginSignup = ({ setSigninClicked, signinClicked }) => {
                   type="submit"
                   value="Sign up"
                   className="forms_buttons-action"
+                  onClick={handleSignUp}
                 />
               </div>
             </form>
