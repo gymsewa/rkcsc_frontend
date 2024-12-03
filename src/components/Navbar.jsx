@@ -12,6 +12,8 @@ const Navbar = ({
   setISsLoggedIn,
   setUserSignUp,
   navRef,
+  memberSignUp,
+  setMemberSignUp,
   userSignUp,
 }) => {
   const appContext = useContext(AppContext);
@@ -108,6 +110,7 @@ const Navbar = ({
             onClick={() => {
               console.log("User Signup");
               setUserSignUp(true);
+              setMemberSignUp(false);
               setSigninClicked(true);
               setIsSignupDropdownOpen(false);
             }}
@@ -118,10 +121,12 @@ const Navbar = ({
             className={styles.dropdownItem}
             onClick={() => {
               console.log("Member Signup");
+              setMemberSignUp(true);
+              setSigninClicked(true);
               setIsSignupDropdownOpen(false);
             }}
           >
-            Member Signup
+            Partner Signup
           </div>
         </div>
       )}

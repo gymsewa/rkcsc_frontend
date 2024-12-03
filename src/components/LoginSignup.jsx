@@ -8,6 +8,8 @@ const LoginSignup = ({
   navRef,
   setUserSignUp,
   userSignUp,
+  memberSignUp,
+  setMemberSignUp,
 }) => {
   const { loginEmailPass, signupEmailPass } = Core();
 
@@ -19,7 +21,9 @@ const LoginSignup = ({
   const signupPassInputRef = useRef(null);
   const userNameInputRef = useRef(null);
   const loginPassRef = useRef(null);
-
+  const firmNameRef = useRef(null);
+  const docsRef = useRef(null);
+  
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -30,6 +34,7 @@ const LoginSignup = ({
       ) {
         setSigninClicked(false);
         setUserSignUp(false);
+        setMemberSignUp(false);
       }
     };
 
@@ -50,6 +55,7 @@ const LoginSignup = ({
 
   const handleLogin = (event) => {
     event.preventDefault();
+    setMemberSignUp(false);
 
     console.log("Login button clicked");
 
@@ -75,6 +81,8 @@ const LoginSignup = ({
     const phoneNumber = phoneInputRef.current?.value;
     const email = emailInputRef.current?.value;
     const password = signupPassInputRef.current?.value;
+    const firmName = firmNameRef?.current?.value;
+    const docs = docsRef?.current?.value;
 
     console.log("Signup inputs:", { firstName, phoneNumber, email });
 
@@ -84,6 +92,8 @@ const LoginSignup = ({
         phoneNumber,
         email,
         password,
+        firmName,
+        docs,
         setSigninClicked
       );
     } else {
@@ -170,57 +180,129 @@ const LoginSignup = ({
               </div>
             </form>
           </div>
-          <div className="user_forms-signup">
-            <h2 className="forms_title">Sign Up</h2>
-            <form className="forms_form" onSubmit={handleSignUp}>
-              <fieldset className="forms_fieldset">
-                <div className="forms_field">
+          {memberSignUp ? (
+            <div className="user_forms-signup">
+              <h2 className="forms_title">Partner Sign Up</h2>
+              <form className="forms_form" onSubmit={handleSignUp}>
+                <fieldset className="forms_fieldset">
+                  <div className="forms_field">
+                    <input
+                      ref={fNameInputRef}
+                      type="text"
+                      placeholder="Full Name"
+                      className="forms_field-input"
+                      required
+                    />
+                  </div>
+                  <div className="forms_field">
+                    <input
+                      ref={phoneInputRef}
+                      type="tel"
+                      placeholder="Phone"
+                      className="forms_field-input"
+                      required
+                    />
+                  </div>
+                  <div className="forms_field">
+                    <input
+                      ref={emailInputRef}
+                      type="email"
+                      placeholder="Email"
+                      className="forms_field-input"
+                      required
+                    />
+                  </div>
+                  <div className="forms_field">
+                    <input
+                      ref={signupPassInputRef}
+                      type="text"
+                      placeholder="Password"
+                      className="forms_field-input"
+                      required
+                    />
+                  </div>
+                  <div className="forms_field">
+                    <input
+                      ref={firmNameRef}
+                      type="text"
+                      placeholder="Firm Name"
+                      className="forms_field-input"
+                      required
+                    />
+                  </div>
+                  <div className="forms_field">
+                    <input
+                      ref={docsRef}
+                      type="file"
+                      placeholder="Full Name"
+                      className="forms_field-input"
+                      required
+                    />
+                  </div>
+                </fieldset>
+                <div className="forms_buttons">
                   <input
-                    ref={fNameInputRef}
-                    type="text"
-                    placeholder="Full Name"
-                    className="forms_field-input"
-                    required
+                    type="submit"
+                    value="Sign up"
+                    className="forms_buttons-action"
+                    onClick={handleSignUp}
                   />
                 </div>
-                <div className="forms_field">
+              </form>
+            </div>
+          ) : (
+            <div className="user_forms-signup">
+              <h2 className="forms_title">Sign Up</h2>
+              <form className="forms_form" onSubmit={handleSignUp}>
+                <fieldset className="forms_fieldset">
+                  <div className="forms_field">
+                    <input
+                      ref={fNameInputRef}
+                      type="text"
+                      placeholder="Full Name"
+                      className="forms_field-input"
+                      required
+                    />
+                  </div>
+                  <div className="forms_field">
+                    <input
+                      ref={phoneInputRef}
+                      type="tel"
+                      placeholder="Phone"
+                      className="forms_field-input"
+                      required
+                    />
+                  </div>
+                  <div className="forms_field">
+                    <input
+                      ref={emailInputRef}
+                      type="email"
+                      placeholder="Email"
+                      className="forms_field-input"
+                      required
+                    />
+                  </div>
+                  <div className="forms_field">
+                    <input
+                      ref={signupPassInputRef}
+                      type="text"
+                      placeholder="Password"
+                      className="forms_field-input"
+                      required
+                    />
+                  </div>
+                </fieldset>
+                <div className="forms_buttons">
                   <input
-                    ref={phoneInputRef}
-                    type="tel"
-                    placeholder="Phone"
-                    className="forms_field-input"
-                    required
+                    type="submit"
+                    value="Sign up"
+                    className="forms_buttons-action"
+                    onClick={handleSignUp}
                   />
                 </div>
-                <div className="forms_field">
-                  <input
-                    ref={emailInputRef}
-                    type="email"
-                    placeholder="Email"
-                    className="forms_field-input"
-                    required
-                  />
-                </div>
-                <div className="forms_field">
-                  <input
-                    ref={signupPassInputRef}
-                    type="text"
-                    placeholder="Password"
-                    className="forms_field-input"
-                    required
-                  />
-                </div>
-              </fieldset>
-              <div className="forms_buttons">
-                <input
-                  type="submit"
-                  value="Sign up"
-                  className="forms_buttons-action"
-                  onClick={handleSignUp}
-                />
-              </div>
-            </form>
-          </div>
+              </form>
+            </div>
+          )}
         </div>
       </div>
     </section>

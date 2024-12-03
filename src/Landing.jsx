@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import LoginSignup from "./components/LoginSignup";
 import ContactUs from "./components/ContactUs";
 import FixedButtons from "./components/FixedButtons";
-import HomeSection from "./components/HomeSection";
+import HeroSection from "./components/HeroSection";
 import AppContext from "./AppContext/AppContext";
 
 const local_storagePrefences = localStorage.getItem("PrefrenceVal");
@@ -13,6 +13,7 @@ const Landing = () => {
   const [signinClicked, setSigninClicked] = useState(false);
   const [isLoggedIn, setISsLoggedIn] = useState(false);
   const [userSignUp, setUserSignUp] = useState(false);
+  const [memberSignUp, setMemberSignUp] = useState(false);
   const navRef = useRef(null);
 
   const [userInfo, setUserInfo] = useState(
@@ -46,16 +47,6 @@ const Landing = () => {
   return (
     <AppContext.Provider value={preferencesVal}>
       <div className="relative">
-        <Navbar
-          navRef={navRef} 
-          signinClicked={signinClicked}
-          setSigninClicked={setSigninClicked}
-          isLoggedIn={isLoggedIn}
-          setISsLoggedIn={setISsLoggedIn}
-          userSignUp={userSignUp}
-          setUserSignUp={setUserSignUp}
-        />
-        <HomeSection />
         {signinClicked && (
           <LoginSignup
             navRef={navRef}
@@ -63,11 +54,29 @@ const Landing = () => {
             setUserSignUp={setUserSignUp}
             userSignUp={userSignUp}
             signinClicked={signinClicked}
+            memberSignUp={memberSignUp}
+            setMemberSignUp={setMemberSignUp}
           />
         )}
+        <Navbar
+          navRef={navRef}
+          signinClicked={signinClicked}
+          setSigninClicked={setSigninClicked}
+          isLoggedIn={isLoggedIn}
+          setISsLoggedIn={setISsLoggedIn}
+          userSignUp={userSignUp}
+          setUserSignUp={setUserSignUp}
+          memberSignUp={memberSignUp}
+          setMemberSignUp={setMemberSignUp}
+        />
+        <HeroSection />
+
+        {/* <Services/> */}
+        {/* <AboutUs/> */}
+
         <ContactUs />
         <ContactUs />
-        <ContactUs />
+        {/* <Footer/> */}
         <FixedButtons navRef={navRef} />
       </div>
     </AppContext.Provider>
