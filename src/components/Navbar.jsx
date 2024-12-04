@@ -4,6 +4,7 @@ import logo from "../assets/LogoRkcsc.png";
 import AppContext from "../AppContext/AppContext";
 import profile from "../assets/userProfile.png";
 import { TiArrowSortedDown } from "react-icons/ti";
+import { useNavigate,useLocation   } from "react-router-dom";
 
 const Navbar = ({
   setSigninClicked,
@@ -15,13 +16,16 @@ const Navbar = ({
   memberSignUp,
   setMemberSignUp,
   userSignUp,
+  isSignup,
+  setIsSignup,
 }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const appContext = useContext(AppContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 938);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isSignupDropdownOpen, setIsSignupDropdownOpen] = useState(false);
-  
 
   useEffect(() => {
     const handleScroll = () => {
@@ -74,6 +78,14 @@ const Navbar = ({
     }
   };
 
+  const handleProfileNavigation = () => {
+    if (location.pathname === '/profile') {
+      navigate('/');
+    } else {
+      navigate('/profile');
+    }
+  };
+
   const renderNavItems = () => (
     <ul
       className={`${styles.navList} ${isMenuOpen ? styles.mobileNavList : ""}`}
@@ -110,6 +122,7 @@ const Navbar = ({
             onClick={() => {
               console.log("User Signup");
               setUserSignUp(true);
+              setIsSignup(true);
               setMemberSignUp(false);
               setSigninClicked(true);
               setIsSignupDropdownOpen(false);
@@ -123,6 +136,8 @@ const Navbar = ({
               console.log("Member Signup");
               setMemberSignUp(true);
               setSigninClicked(true);
+              setUserSignUp(true);
+              setIsSignup(true);
               setIsSignupDropdownOpen(false);
             }}
           >
@@ -141,20 +156,25 @@ const Navbar = ({
     >
       {isLoggedIn ? (
         <>
-          <li
-            onClick={() => {
-              // setSigninClicked(!signinClicked);
-            }}
-          >
-            Hii User
+          <li onClick={handleProfileNavigation}>
+            {`Hii ${appContext.userInfoVal.firstName.trim().split(" ")[0]}`}
           </li>
-          <img src={profile} alt="profile" className="h-10 w-10" />
+          <img
+            src={profile}
+            alt="profile"
+            className="h-10 w-10 cursor-pointer"
+            onClick={handleProfileNavigation}
+          />
         </>
       ) : (
         <>
           <li
             onClick={() => {
-              setSigninClicked(!signinClicked);
+              setSigninClicked(true);
+              setMemberSignUp(false);
+              setUserSignUp(false);
+              setIsSignup(false);
+              console.log("login clicked");
             }}
           >
             Login

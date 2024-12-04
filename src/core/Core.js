@@ -34,11 +34,27 @@ const Core = () => {
 
       if (response.data.data) {
         console.log("Login successful:", response.data.data);
+        const userDataresp = await getUserData(response.data?.data?.accessToken);
+        console.log("LOG USER DATA: ", userDataresp);
 
-        appContext.setUserInfo((prev) => ({
-          ...prev,
-          sessionId: response.data.data.accessToken,
-        }));
+        if(userDataresp) {
+          appContext.setUserInfo((prev) => ({
+            ...prev,
+            firstName: userDataresp.firstName,
+            phoneNumber: userDataresp.phoneNumber,
+            email: userDataresp.email,
+            picture: userDataresp.photoUrl,
+            username: userDataresp.username,
+            accountType: userDataresp.accountType,
+            userId: userDataresp._id,
+            sessionId: response.data?.data?.accessToken,
+          }));
+        }
+
+        // appContext.setUserInfo((prev) => ({
+        //   ...prev,
+        //   sessionId: response.data?.data?.accessToken,
+        // }));
         setSigninClicked(false);
       }
     } catch (error) {
@@ -268,7 +284,28 @@ const Core = () => {
     }
   };
 
-  const handleGetProfile = async () => {};
+  const getUserData = async (sessionId) => {
+    console.log("session id get profile", sessionId)
+
+    let config = {
+      method: "GET",
+      maxBodyLength: Infinity,
+      url: process.env.REACT_APP_BASE_URL + `/api/v1/user/get_profile`,
+      headers: {
+        Authorization: "Bearer " + sessionId,
+      },
+    };
+    try {
+      const response = await axios.request(config);
+      if (response.data?.data) {
+        return response.data.data;
+      } 
+    } catch (error) {
+      console.error("Error:", error);
+      
+      return null;
+    }
+  };
 
   return {
     loginEmailPass,
