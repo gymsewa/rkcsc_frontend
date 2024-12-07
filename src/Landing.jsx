@@ -5,6 +5,8 @@ import ContactUs from "./components/ContactUs";
 import FixedButtons from "./components/FixedButtons";
 import HeroSection from "./components/HeroSection";
 import AppContext from "./AppContext/AppContext";
+import Footer from "./components/Footer";
+import Cards from "./components/Cards";
 
 // const local_storagePrefences = localStorage.getItem("PrefrenceVal");
 
@@ -89,13 +91,15 @@ const Landing = ({
           isSignup={isSignup}
         /> */}
         <HeroSection />
+        <Cards/>
 
         {/* <Services/> */}
         {/* <AboutUs/> */}
 
         <ContactUs />
         <ContactUs />
-        {/* <Footer/> */}
+        
+        <Footer/>
         <FixedButtons navRef={navRef} />
       </div>
   );
