@@ -55,7 +55,7 @@ const Footer = () => {
               </a>
             </div>
             <p className="text-gray-400 mb-6 text-lg font-bold">
-            Rk Consultancy And CSC Services
+              Rk Consultancy And CSC Services
             </p>
             <div className="flex space-x-4">
               <a href="#" className="bg-blue-600 p-2 rounded-full text-white">
@@ -114,12 +114,9 @@ const Footer = () => {
         <div className="container mx-auto px-4 flex flex-wrap justify-around items-center">
           <div>
             <p className="text-gray-400 text-sm">
-              Copyright &copy; 2018, All Right Reserved{" "}
-              <a
-                href="https://codepen.io/anupkumar92/"
-                className="text-blue-500"
-              >
-                Anup
+              Copyright &copy; 2024, All Right Reserved{" "}
+              <a href="https://dev.rkcsc.in/" className="text-blue-500">
+                BIL
               </a>
             </p>
           </div>
