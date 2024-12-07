@@ -122,18 +122,21 @@ const Footer = () => {
           </div>
           <div>
             <ul className="flex space-x-4">
-              {["Home", "Terms", "Privacy", "Policy", "Contact"].map(
-                (link, index) => (
-                  <li key={index}>
-                    <a
-                      href="#"
-                      className="text-gray-400 hover:text-blue-500 text-sm"
-                    >
-                      {link}
-                    </a>
-                  </li>
-                )
-              )}
+              {[
+                "Home",
+                "Terms and Conditions",
+                "Privacy Policy",
+                "Contact",
+              ].map((link, index) => (
+                <li key={index}>
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-blue-500 text-sm"
+                  >
+                    {link}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
