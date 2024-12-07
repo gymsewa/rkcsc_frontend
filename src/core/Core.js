@@ -35,7 +35,7 @@ const Core = () => {
       if (response.data.data) {
         console.log("Login successful:", response.data.data);
         const userDataresp = await getUserData(response.data?.data?.accessToken);
-        console.log("LOG USER DATA: ", userDataresp);
+        console.log("LOG USER DATA : ", userDataresp);
 
         if(userDataresp) {
           appContext.setUserInfo((prev) => ({
