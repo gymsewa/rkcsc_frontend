@@ -7,6 +7,7 @@ import HeroSection from "./components/HeroSection";
 import AppContext from "./AppContext/AppContext";
 import Footer from "./components/Footer";
 import Cards from "./components/Cards";
+import About from "./components/About";
 
 // const local_storagePrefences = localStorage.getItem("PrefrenceVal");
 
@@ -92,11 +93,11 @@ const Landing = ({
         /> */}
         <HeroSection />
         <Cards/>
+        <About/>
 
         {/* <Services/> */}
         {/* <AboutUs/> */}
 
-        <ContactUs />
         <ContactUs />
         
         <Footer/>
