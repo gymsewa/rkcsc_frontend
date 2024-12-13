@@ -1,5 +1,5 @@
 import React from "react";
-
+import ProductCards from "./ProductCards";
 const Cards = () => {
   const products = [
     {
@@ -39,46 +39,21 @@ const Cards = () => {
       price: "INR 850.00",
     },
   ];
+
   return (
     <div className="container mx-auto px-4 py-8">
-      <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
-        OUR SERVICES
-      </h2>
+      <div className="text-center pb-10 px-0 mr-[4%] relative">
+        <span className="absolute text-[#5f687b] left-0 right-0 z-10 font-bold text-[52px] uppercase">
+          Services
+        </span>
+        <h2 className="text-[38px] font-bold top-7 uppercase mb-5 pb-0 text-gray-800 relative z-10">
+          Services
+        </h2>
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {products.map((product) => (
-          <div
-            key={product.id}
-            className="bg-slate-100 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
-          >
-            <div className="flex justify-center items-center w-full h-60 sm:h-72 md:h-80">
-              <img
-                src={product.image}
-                alt={product.title}
-                className="object-cover w-full h-full transition-transform duration-300 ease-in-out transform hover:scale-110"
-              />
-            </div>
-            <div className="p-4">
-              <div className="flex justify-between items-start mb-2">
-                <h3 className="text-xl font-semibold text-gray-800">
-                  {product.title}
-                </h3>
-              </div>
-              <p className="text-gray-600 text-sm mb-4">
-                {product.description}
-              </p>
-              <div className="flex justify-between items-center">
-                <span className="text-lg font-bold text-gray-800">
-                  {product.price}
-                </span>
-                <button className="group relative inline-block overflow-hidden rounded border-4 border-double border-grey-500 px-5 py-2 font-medium text-black-600">
-                  <span className="absolute left-0 top-0 mb-0 flex h-full w-0 translate-x-0 transform bg-zinc-700 opacity-90 transition-all duration-300 ease-out group-hover:w-full"></span>
-                  <span className="relative group-hover:text-white">
-                    ADD TO CART
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
+          
+          <ProductCards product = {product}/>
         ))}
       </div>
     </div>

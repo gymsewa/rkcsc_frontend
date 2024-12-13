@@ -14,7 +14,11 @@ const LoginSignup = ({
   memberSignUp,
   setMemberSignUp,
   setIsSignup,
-  isSignup
+  isSignup,
+  setShowGlobalLoader,
+  setShowNotification,
+  setFailedNoti,
+
 }) => {
   const { loginEmailPass, signupEmailPass } = Core();
 
@@ -86,7 +90,7 @@ const LoginSignup = ({
     console.log("Password input:", password ? "***" : "empty");
 
     if (email && password) {
-      loginEmailPass(email, password, setSigninClicked);
+      loginEmailPass(email, password, setSigninClicked,setShowGlobalLoader,setShowNotification,setFailedNoti);
     } else {
       console.error("Email or password is missing");
     }
@@ -94,25 +98,25 @@ const LoginSignup = ({
 
   const handleSignUp = (event) => {
     event.preventDefault();
-
+  
     if (memberSignUp && !docsRef.current?.value) {
       console.error("Please upload a document");
       return;
     }
-
+  
     console.log("Signup button clicked");
-
-    
-
+  
     const firstName = fNameInputRef.current?.value;
     const phoneNumber = phoneInputRef.current?.value;
     const email = emailInputRef.current?.value;
     const password = signupPassInputRef.current?.value;
     const firmName = firmNameRef?.current?.value;
-    const docs = docsRef?.current?.value;
+    
 
+    const docs = docsRef?.current?.files?.[0];
+  
     console.log("Signup inputs:", { firstName, phoneNumber, email });
-
+  
     if (firstName && phoneNumber && email && password) {
       signupEmailPass(
         firstName,
@@ -121,7 +125,8 @@ const LoginSignup = ({
         password,
         firmName,
         docs,
-        setSigninClicked
+        setSigninClicked,
+        setShowGlobalLoader
       );
     } else {
       console.error("Please fill in all signup fields");

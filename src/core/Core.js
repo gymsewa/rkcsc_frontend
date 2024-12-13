@@ -5,8 +5,16 @@ import AppContext from "../AppContext/AppContext";
 const Core = () => {
   const appContext = useContext(AppContext);
 
-  const loginEmailPass = async (email, password, setSigninClicked) => {
+  const loginEmailPass = async (
+    email,
+    password,
+    setSigninClicked,
+    setShowGlobalLoader,
+    setShowNotification,
+    setFailedNoti
+  ) => {
     console.log("Login attempt started");
+    setShowGlobalLoader(true);
 
     if (!email || !password) {
       console.error("Please enter both email and password");
@@ -34,30 +42,46 @@ const Core = () => {
 
       if (response.data.data) {
         console.log("Login successful:", response.data.data);
-        const userDataresp = await getUserData(response.data?.data?.accessToken);
+        const userDataresp = await getUserData(
+          response.data?.data?.accessToken
+        );
         console.log("LOG USER DATA : ", userDataresp);
+        console.log("orders Data:",userDataresp.orderData)
 
-        if(userDataresp) {
+        if (userDataresp) {
           appContext.setUserInfo((prev) => ({
             ...prev,
-            firstName: userDataresp.firstName,
-            phoneNumber: userDataresp.phoneNumber,
-            email: userDataresp.email,
-            picture: userDataresp.photoUrl,
-            username: userDataresp.username,
-            accountType: userDataresp.accountType,
-            userId: userDataresp._id,
+            firstName: userDataresp?.userData?.firstName,
+            phoneNumber: userDataresp?.userData?.phoneNumber,
+            email: userDataresp?.userData?.email,
+            picture: userDataresp?.userData?.photoUrl,
+            username: userDataresp?.userData?.username,
+            accountType: userDataresp?.userData?.accountType,
+            orders: userDataresp?.orderData,
+            userId: userDataresp?.userData?._id,
             sessionId: response.data?.data?.accessToken,
           }));
+
+          if(userDataresp?.userData?.accountType === "member") {
+            appContext.setUserInfo((prev) => ({
+              ...prev,
+              wallet: userDataresp?.userData?.wallet,
+            }));
+          }
         }
 
-        // appContext.setUserInfo((prev) => ({
-        //   ...prev,
-        //   sessionId: response.data?.data?.accessToken,
-        // }));
         setSigninClicked(false);
+        setShowGlobalLoader(false);
+        setShowNotification(true);
+        setTimeout(() => {
+          setShowNotification(false);
+        }, 3000);
       }
     } catch (error) {
+      setFailedNoti(true);
+      setTimeout(() => {
+        setFailedNoti(false);
+      }, 3000);
       console.error("Login Error:", {
         message: error.message,
         response: error.response ? error.response.data : "No response",
@@ -78,6 +102,8 @@ const Core = () => {
       } else {
         console.error("Error setting up login request:", error.message);
       }
+    } finally {
+      setShowGlobalLoader(false);
     }
   };
 
@@ -88,8 +114,11 @@ const Core = () => {
     password,
     firmName,
     docs,
-    setSigninClicked
+    setSigninClicked,
+    setShowGlobalLoader
   ) => {
+    setShowGlobalLoader(true);
+
     if (!firstName || !phoneNumber || !email || !password) {
       console.error("Please fill in all required fields");
       return null;
@@ -107,44 +136,34 @@ const Core = () => {
       return null;
     }
 
-    // let signupData = {
-    //   firstName: firstName,
-    //   phoneNumber: phoneNumber,
-    //   email: email,
-    //   password: password,
-    // };
+    const formData = new FormData();
 
-    const userType = firmName && docs ? "member" : "user";
-    var signupData;
+    formData.append("firstName", firstName);
+    formData.append("phone", phoneNumber);
+    formData.append("email", email);
+    formData.append("password", password);
 
-    if (userType === "member") {
-      signupData = {
-        firstName: firstName,
-        phone: phoneNumber,
-        email: email,
-        password: password,
-        firmName: firmName,
-        docs: docs,
-      };
-    } else {
-      signupData = {
-        firstName: firstName,
-        phone: phoneNumber,
-        email: email,
-        password: password,
-      };
+    if (firmName) {
+      formData.append("firmName", firmName);
     }
 
-    console.log("sign up data", signupData);
+    if (docs && docs instanceof File) {
+      formData.append("file", docs);
+    } else if (docs && typeof docs === "string") {
+      const fileBlob = dataURItoBlob(docs);
+      formData.append("file", fileBlob, "document.pdf");
+    }
+
+    const userType = firmName && docs ? "member" : "user";
 
     try {
       const response = await axios({
         method: "post",
         url: process.env.REACT_APP_BASE_URL + `/api/v1/auth/signup/${userType}`,
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
-        data: signupData,
+        data: formData,
       });
 
       console.log("Full signup response:", response);
@@ -154,18 +173,33 @@ const Core = () => {
 
         if (response.data.data?.accessToken) {
           console.log("User successfully signed up with access token");
+          const userDataresp = await getUserData(
+            response.data?.data?.accessToken
+          );
+          console.log("LOG USER DATA: ", userDataresp.userData);
 
-          appContext.setUserInfo((prev) => ({
-            ...prev,
-            sessionId: response.data.data.accessToken,
-          }));
+          if (userDataresp) {
+            appContext.setUserInfo((prev) => ({
+              ...prev,
+              firstName: userDataresp?.userData?.firstName,
+              phoneNumber: userDataresp?.userData?.phoneNumber,
+              email: userDataresp?.userData?.email,
+              picture: userDataresp?.userData?.photoUrl,
+              username: userDataresp?.userData?.username,
+              accountType: userDataresp?.userData?.accountType,
+              orders: userDataresp?.orderData,
+              userId: userDataresp?.userData?._id,
+              sessionId: response.data?.data?.accessToken,
+            }));
+          }
 
           setSigninClicked(false);
+          setShowGlobalLoader(false);
         } else if (response.data.data) {
-          console.log("Here is the payment link",response.data.data);
+          console.log("Here is the payment link", response.data.data);
           const paymentUrl = response.data.data;
-        
-        window.location.href = paymentUrl;
+
+          window.location.href = paymentUrl;
           setSigninClicked(false);
         } else {
           console.warn("Unexpected signup response structure");
@@ -187,105 +221,30 @@ const Core = () => {
       } else {
         console.error("Error setting up signup request:", error.message);
       }
+    } finally {
+      setShowGlobalLoader(false);
     }
   };
 
-  const memSignupEmailPass = async (
-    firstName,
-    phoneNumber,
-    email,
-    password,
-    firmName,
-    docs,
-    setSigninClicked
-  ) => {
-    if (!firstName || !phoneNumber || !email || !password) {
-      console.error("Please fill in all required fields");
-      return null;
+  function dataURItoBlob(dataURI) {
+    let byteString;
+    if (dataURI.split(",")[0].indexOf("base64") >= 0)
+      byteString = atob(dataURI.split(",")[1]);
+    else byteString = unescape(dataURI.split(",")[1]);
+
+    const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      console.error("Invalid email format");
-      return null;
-    }
-
-    const phoneRegex = /^[0-9]{10}$/;
-    if (!phoneRegex.test(phoneNumber)) {
-      console.error("Invalid phone number");
-      return null;
-    }
-
-    // let signupData = {
-    //   firstName: firstName,
-    //   phoneNumber: phoneNumber,
-    //   email: email,
-    //   password: password,
-    // };
-
-    const signupData = {
-      firstName: firstName,
-      phone: phoneNumber,
-      email: email,
-      password: password,
-      firmName: firmName,
-      docs: docs,
-    };
-
-    console.log("sign up data", signupData);
-
-    try {
-      const response = await axios({
-        method: "post",
-        url: process.env.REACT_APP_BASE_URL + `/api/v1/auth/signup/member`,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: signupData,
-      });
-
-      console.log("Full signup response:", response);
-
-      if (response.data) {
-        console.log("Signup response data:", response.data);
-
-        if (response.data.data?.accessToken) {
-          console.log("User successfully signed up with access token");
-
-          appContext.setUserInfo((prev) => ({
-            ...prev,
-            sessionId: response.data.data.accessToken,
-          }));
-
-          setSigninClicked(false);
-        } else if (response.data.data) {
-          console.log("Signed up successfully, but no access token");
-          setSigninClicked(false);
-        } else {
-          console.warn("Unexpected signup response structure");
-        }
-      } else {
-        console.error("No data in signup response");
-      }
-    } catch (error) {
-      console.error("Signup Error:", {
-        message: error.message,
-        response: error.response ? error.response.data : "No response",
-        status: error.response ? error.response.status : "No status",
-      });
-
-      if (error.response) {
-        console.error("Bad Request: ", error.response.data.message);
-      } else if (error.request) {
-        console.error("No response received from server during signup");
-      } else {
-        console.error("Error setting up signup request:", error.message);
-      }
-    }
-  };
+    return new Blob([ab], { type: mimeString });
+  }
 
   const getUserData = async (sessionId) => {
-    console.log("session id get profile", sessionId)
+    console.log("session id get profile", sessionId);
 
     let config = {
       method: "GET",
@@ -299,10 +258,9 @@ const Core = () => {
       const response = await axios.request(config);
       if (response.data?.data) {
         return response.data.data;
-      } 
+      }
     } catch (error) {
       console.error("Error:", error);
-      
       return null;
     }
   };

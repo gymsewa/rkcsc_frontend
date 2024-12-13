@@ -4,7 +4,7 @@ import logo from "../assets/LogoRkcsc.png";
 import AppContext from "../AppContext/AppContext";
 import profile from "../assets/userProfile.png";
 import { TiArrowSortedDown } from "react-icons/ti";
-import { useNavigate,useLocation   } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 const Navbar = ({
   setSigninClicked,
@@ -53,6 +53,8 @@ const Navbar = ({
   useEffect(() => {
     if (appContext.userInfoVal.sessionId !== null) {
       setISsLoggedIn(true);
+    }else {
+      setISsLoggedIn(false);
     }
   }, [appContext.userInfoVal.sessionId]);
 
@@ -79,10 +81,10 @@ const Navbar = ({
   };
 
   const handleProfileNavigation = () => {
-    if (location.pathname === '/profile') {
-      navigate('/');
+    if (location.pathname === "/profile") {
+      navigate("/");
     } else {
-      navigate('/profile');
+      navigate("/profile");
     }
   };
 
@@ -91,16 +93,16 @@ const Navbar = ({
       className={`${styles.navList} ${isMenuOpen ? styles.mobileNavList : ""}`}
     >
       <li>
-        <a>Home</a>
+        <Link to="/">Home</Link>
       </li>
       <li>
-        <a>Services</a>
+        <Link to="/services">Services</Link>
       </li>
       <li>
-        <a>About Us</a>
+        <Link to="/about">About Us</Link>
       </li>
       <li>
-        <a>Contact Us</a>
+        <Link to="/contact">Contact Us</Link>
       </li>
     </ul>
   );
@@ -156,8 +158,8 @@ const Navbar = ({
     >
       {isLoggedIn ? (
         <>
-          <li onClick={handleProfileNavigation}>
-            {`Hii ${appContext.userInfoVal.firstName.trim().split(" ")[0]}`}
+          <li className="select-none" onClick={handleProfileNavigation}>
+            {`Hi ${appContext.userInfoVal.firstName.trim().split(" ")[0]}`}
           </li>
           <img
             src={profile}
@@ -196,7 +198,6 @@ const Navbar = ({
       <div className={styles.Navbar} ref={navRef}>
         <div className="flex justify-center items-center">
           <img src={logo} alt="Logo" className={styles.logo} />
-          {!isMobile && <span>Rk Consultancy And CSC Services</span>}
         </div>
 
         {isMobile ? (

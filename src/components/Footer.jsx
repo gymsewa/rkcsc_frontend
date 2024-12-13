@@ -14,7 +14,7 @@ const Footer = () => {
     <div className="bg-gray-900 text-white">
       <div className="border-b border-gray-700 py-5">
         <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-around">
+          <div className="flex flex-wrap">
             <div className="flex items-center space-x-4 mb-4 sm:mb-0">
               <FaMapMarkerAlt className="text-blue-500 text-3xl" />
               <div>

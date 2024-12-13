@@ -93,7 +93,7 @@ input::placeholder {
 .user {
   display: flex;
   position: fixed;
-  top: 10%;
+  /* top: 10%; */
   /* left: 50%; */
   justify-content: center;
   align-items: center;
@@ -171,7 +171,7 @@ input::placeholder {
   top: 50%;
   left: 40px;
   width: calc(50% - 40px);
-  min-height: 480px;
+  min-height: 130%;
   background-color: #fff;
   border-radius: 3px;
   /* box-shadow: 2px 0 15px rgba(0, 0, 0, 0.25); */
@@ -208,7 +208,7 @@ input[type="file"] {
   gap: 10px;
   color: #6e6e6e;
   text-align: right;
-  width: 47%;
+  /* width: 47%; */
   /* justify-content: start; */
   align-items: center;
   transition: all 500ms ease-in-out;
@@ -224,8 +224,8 @@ input[type="file"] {
   align-items: center;
   font-family: inherit;
   font-weight: 500;
-  font-size: 15px;
-  padding: 5px 15px;
+  font-size: 0.9rem;
+  padding: 0.5rem 0.9rem;
   color: white;
   background: #ad5389;
   background: linear-gradient(0deg, #5e2bff 0%, #5e2bff 100%);
@@ -283,7 +283,7 @@ input[type="file"] {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 35px;
+  margin-top: 30px;
 }
 
 .user_options-forms .forms_buttons-forgot {

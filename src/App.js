@@ -8,7 +8,12 @@ import {
   Routes,
   Route,
   Navigate,
+  useAsyncError,
 } from "react-router-dom";
+import About from "./components/About";
+import Cards from "./components/Cards";
+import ContactUs from "./components/ContactUs";
+import Notification from "./components/Notification";
 
 import ProfileSection from "./components/ProfileSection";
 
@@ -21,6 +26,8 @@ function App() {
   const [userSignUp, setUserSignUp] = useState(false);
   const [memberSignUp, setMemberSignUp] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
+  const [failedNoti, setFailedNoti] = useState(false);
 
   const navRef = useRef(null);
 
@@ -28,12 +35,14 @@ function App() {
     local_storagePrefences != null
       ? JSON.parse(localStorage.getItem("PrefrenceVal")).userInfoVal
       : {
-          firstName: "Sachin Rana",
+          firstName: "rkcsc",
           phoneNumber: null,
-          email: "sachinrana2304@gmail.com",
+          email: "noreply@rkcsc.in",
           picture: "https://picsum.photos/400/400",
           username: null,
           accountType: null,
+          wallet: null,
+          orders: [],
           userId: null,
           sessionId: null,
         }
@@ -51,6 +60,8 @@ function App() {
   return (
     <AppContext.Provider value={preferencesVal}>
       <Router>
+        {showNotification && <Notification notification="LogIn Successful" />}
+        {failedNoti && <Notification notification="LogIn Failed" />}
         <Navbar
           navRef={navRef}
           signinClicked={signinClicked}
@@ -80,9 +91,14 @@ function App() {
                 setMemberSignUp={setMemberSignUp}
                 setIsSignup={setIsSignup}
                 isSignup={isSignup}
+                setShowNotification={setShowNotification}
+                setFailedNoti={setFailedNoti}
               />
             }
           />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Cards />} />
+          <Route path="/contact" element={<ContactUs />} />
           <Route path="/profile" element={<ProfileSection />} />
         </Routes>
       </Router>
