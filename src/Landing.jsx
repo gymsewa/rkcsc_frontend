@@ -50,7 +50,6 @@ const Landing = ({
       <Cards />
       <About />
       <ContactUs />
-      <Footer />
       <FixedButtons navRef={navRef} />
     </div>
   );

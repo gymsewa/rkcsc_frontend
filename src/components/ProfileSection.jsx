@@ -5,7 +5,7 @@ const ProfileSection = () => {
   return (
     <>
       <div className="">
-        <div className="text-center pb-6 px-0 mr-[4%] relative">
+        <div className="text-center pb-2 px-0 mr-[4%] relative">
           <span className="absolute text-[#5f687b] left-0 right-0 z-10 font-bold text-[45px] uppercase">
             Your Profile
           </span>

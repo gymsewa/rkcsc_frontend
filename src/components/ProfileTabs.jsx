@@ -5,6 +5,16 @@ import { MdFileDownload } from "react-icons/md";
 import AppContext from "../AppContext/AppContext";
 import Orders from "./Orders";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { FaRegUser } from "react-icons/fa";
+import { MdOutlineEmail } from "react-icons/md";
+import { IoWalletOutline } from "react-icons/io5";
+import { MdOutlinePhone } from "react-icons/md";
+import { GoOrganization } from "react-icons/go";
+import { MdOutlineCurrencyRupee } from "react-icons/md";
+import supportIcon from "../assets/support (1).png";
+import serviceIcon from "../assets/digital-servicesRK.png";
+import accountIcon from "../assets/user-account.png";
+import WalletHistory from "./WalletHistory";
 
 const ProfileTabs = () => {
   const appContext = useContext(AppContext);
@@ -12,15 +22,25 @@ const ProfileTabs = () => {
   const [isClickedAccount, setIsClickedAccount] = useState(true);
   const [isClickedBilling, setIsClickedBilling] = useState(false);
   const [isClickedSupport, setIsClickedSupport] = useState(false);
+  const [isWalletClicked, setIsWalletClicked] = useState(false);
 
   const handleAccount = () => {
     setIsClickedAccount(true);
     setIsClickedBilling(false);
     setIsClickedSupport(false);
+    setIsWalletClicked(false);
   };
 
   const handleBilling = () => {
     setIsClickedBilling(true);
+    setIsClickedAccount(false);
+    setIsClickedSupport(false);
+    setIsWalletClicked(false);
+  };
+
+  const handleWallet = () => {
+    setIsWalletClicked(true);
+    setIsClickedBilling(false);
     setIsClickedAccount(false);
     setIsClickedSupport(false);
   };
@@ -29,6 +49,7 @@ const ProfileTabs = () => {
     setIsClickedSupport(true);
     setIsClickedAccount(false);
     setIsClickedBilling(false);
+    setIsWalletClicked(false);
   };
 
   const handleLogout = () => {
@@ -41,6 +62,7 @@ const ProfileTabs = () => {
       username: null,
       accountType: null,
       wallet: null,
+      firmName: null,
       orders: [],
       userId: null,
       sessionId: null,
@@ -49,13 +71,14 @@ const ProfileTabs = () => {
     navigate("/");
   };
 
+
   return (
     <>
-      <div className="flex gap-8">
+      <div className="flex flex-wrap  md:gap-8 gap-4">
         <button
           onClick={handleAccount}
           className={clsx(
-            "px-4 rounded-lg text-slate-100 border-zinc-500 border-2 w-24 h-10 hover:scale-105 transition-all duration-300",
+            "px-4 rounded-lg flex justify-center items-center gap-1 text-slate-100 border-zinc-500 border-2 w-24 h-10 hover:scale-105 transition-all duration-300",
             {
               "bg-blue-800 text-slate-100": isClickedAccount === true,
               "bg-zinc-800 ": isClickedAccount === false,
@@ -74,8 +97,22 @@ const ProfileTabs = () => {
             }
           )}
         >
-          Orders
+          Services
         </button>
+        {appContext.userInfoVal.accountType === "member" && (
+          <button
+            onClick={handleWallet}
+            className={clsx(
+              " px-4 rounded-lg text-slate-100 border-zinc-500 border-2  h-10 hover:scale-105 transition-all duration-300",
+              {
+                "bg-blue-800 text-slate-100": isWalletClicked === true,
+                "bg-zinc-800 ": isWalletClicked === false,
+              }
+            )}
+          >
+            Wallet History
+          </button>
+        )}
         <button
           onClick={handleSupport}
           className={clsx(
@@ -93,9 +130,9 @@ const ProfileTabs = () => {
         {isClickedAccount && (
           <>
             <div
-              className="md:h-full md:w-1/3 w-full h-[85%]  text-slate-100 font-semibold text-md flex flex-col gap-4 p-4 rounded-lg
+              className="md:h-full md:w-1/3 w-full h-[85%] relative text-slate-100 font-semibold text-md flex flex-col gap-4 p-4 rounded-lg
         border border-zinc-500 shadow-lg 
-        items-center pt-10"
+        items-center pt-5 md:pt-2"
             >
               <img
                 src={appContext.userInfoVal.picture}
@@ -104,37 +141,60 @@ const ProfileTabs = () => {
                 width={100}
                 height={100}
               />
-              <div className="w-3/4 relative h-full flex flex-col text-slate-200 ">
+              <div className="md:w-[75%] w-full relative h-full flex flex-col text-slate-200">
                 <div className="flex flex-col gap-4">
-                  <div className="flex flex-col">
-                    <span className="text-md text-gray-600">Name</span>
-                    <span className="text-start text-black text-xl">
+                  <div className="flex justify-start items-center gap-4">
+                    <div className="w-20 text-md text-gray-600 flex items-center gap-2">
+                      <FaRegUser /> Name:
+                    </div>
+                    <div className="text-start text-black text-xl flex-1">
                       {appContext.userInfoVal.firstName}
-                    </span>
+                    </div>
                   </div>
-                  <div className="flex flex-col">
-                    <span className="text-md text-gray-600">Email</span>
-                    <span className="text-xl text-black ">
+                  <div className="flex justify-start items-center gap-4">
+                    <div className="w-20 text-md text-gray-600 flex items-center gap-2">
+                      <MdOutlineEmail /> Email:
+                    </div>
+                    <div className="text-xl text-black flex-1 overflow-hidden whitespace-nowrap text-ellipsis">
                       {appContext.userInfoVal.email}
-                    </span>
+                    </div>
                   </div>
-
+                  <div className="flex justify-start items-center gap-4">
+                    <div className="w-20 text-md text-gray-600 flex items-center gap-2">
+                      <MdOutlinePhone /> Phone:
+                    </div>
+                    <div className="text-xl text-black flex-1">
+                      {appContext.userInfoVal.phoneNumber}
+                    </div>
+                  </div>
                   {appContext.userInfoVal.accountType === "member" && (
-                    <div className="flex flex-col">
-                      <span className="text-md text-zinc-600">Wallet</span>
-                      <span className="text-xl text-black">
-                        {appContext.userInfoVal.wallet}
-                      </span>
+                    <div className="flex justify-start items-center gap-4">
+                      <div className="w-20 text-md text-zinc-600 flex items-center gap-2">
+                        <GoOrganization /> Firm:
+                      </div>
+                      <div className="text-xl text-black flex-1 overflow-hidden whitespace-nowrap text-ellipsis">
+                        {appContext.userInfoVal.firmName}
+                      </div>
                     </div>
                   )}
-
-                  <div className=" flex justify-between items-center w-full">
-                    <button className="flex bg-blue-800 rounded-lg items-center p-2 justify-center cursor-pointer hover:bg-blue-600 ">
-                      <span className="text-slate-100">Reset Password</span>
-                    </button>
+                  {appContext.userInfoVal.accountType === "member" && (
+                    <div className="flex justify-start items-center gap-4">
+                      <div className="w-20 text-md text-zinc-600 flex items-center gap-2">
+                        <IoWalletOutline /> Wallet:
+                      </div>
+                      <div className="text-xl text-black flex justify-start items-center flex-1 overflow-hidden whitespace-nowrap text-ellipsis">
+                        <MdOutlineCurrencyRupee />
+                        {appContext.userInfoVal.wallet}
+                      </div>
+                    </div>
+                  )}
+                  <div className="flex justify-between items-center absolute bottom-1 w-full">
+                    <Link to="/updateProfile" className="flex bg-blue-800 rounded-lg items-center p-2 justify-center cursor-pointer hover:bg-blue-600">
+                      <span className="text-slate-100">Update Profile</span>
+                    </Link>
                     <button
                       onClick={handleLogout}
-                      className="flex bg-blue-800 rounded-lg items-center p-2 justify-center cursor-pointer hover:bg-blue-600 "
+                      className="flex bg-blue-800 rounded-lg items-center p-2 justify-center cursor-pointer hover:bg-blue-600"
                     >
                       <span className="text-slate-100">Log out</span>
                     </button>
@@ -170,6 +230,31 @@ const ProfileTabs = () => {
                 <p>Add Credits</p>
               </div>
             </div> */}
+          </div>
+        ) : null}
+
+        {isWalletClicked ? (
+          <div className="flex  flex-col h-full items-end w-full gap-4">
+            <div
+              className="h-[85%] w-full overflow-y-auto text-slate-100 font-semibold text-md flex flex-col gap-4 rounded-lg
+         border border-zinc-500 shadow-lg 
+         "
+            >
+              <WalletHistory />
+            </div>
+            <div
+              className="h-[15%] w-full md:w[30%] lg:w-[30%]  text-slate-100 font-semibold text-md flex  p-4 rounded-lg
+         border border-zinc-500 shadow-lg 
+        items-center px-10 justify-between "
+            >
+              <div className="flex flex-col">
+                <p className="text-blue-700 text-xl font-bold">Current Credits</p>
+                <p className="text-black text-xl flex justify-start items-center"><MdOutlineCurrencyRupee />{appContext.userInfoVal.wallet}</p>
+              </div>
+              <div className="bg-blue-700 text-slate-200 p-2 rounded-lg hover:scale-105 transition-all duration-300 cursor-pointer">
+                <p>Add Credits</p>
+              </div>
+            </div>
           </div>
         ) : null}
 

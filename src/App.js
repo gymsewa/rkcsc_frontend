@@ -14,8 +14,9 @@ import About from "./components/About";
 import Cards from "./components/Cards";
 import ContactUs from "./components/ContactUs";
 import Notification from "./components/Notification";
-
+import Footer from "./components/Footer";
 import ProfileSection from "./components/ProfileSection";
+import UpdateProfile from "./components/UpdateProfile";
 
 const local_storagePrefences = localStorage.getItem("PrefrenceVal");
 
@@ -42,7 +43,9 @@ function App() {
           username: null,
           accountType: null,
           wallet: null,
+          firmName: null,
           orders: [],
+          walletHistory: [],
           userId: null,
           sessionId: null,
         }
@@ -100,7 +103,9 @@ function App() {
           <Route path="/services" element={<Cards />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/profile" element={<ProfileSection />} />
+          <Route path="/updateProfile" element={<UpdateProfile />} />
         </Routes>
+        <Footer />
       </Router>
     </AppContext.Provider>
   );

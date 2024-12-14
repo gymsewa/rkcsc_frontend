@@ -114,7 +114,7 @@ export default function About() {
         </section>
 
         {/* What We Do Section */}
-        <section className="mb-16 text-center animate__animated animate__fadeInUp bg-gradient-to-l from-blue-100 to-blue-200 py-12 rounded-xl shadow-xl">
+        <section className="mb-16 md:px-[4%] text-center animate__animated animate__fadeInUp bg-gradient-to-l from-blue-100 to-blue-200 py-12 rounded-xl shadow-xl">
           <h2 className="text-5xl font-semibold mb-6 text-blue-800">
             What We Do
           </h2>
@@ -147,7 +147,7 @@ export default function About() {
           </div>
         </section>
 
-        <section className="mb-16 bg-blue-100 py-12 px-6 rounded-lg shadow-md">
+        <section className="mb-16 md:px-[4%] bg-blue-100 py-12 px-6 rounded-lg shadow-md">
           <h2 className="text-3xl font-semibold mb-8 text-blue-800 text-center">
             Our Impact
           </h2>
@@ -164,7 +164,7 @@ export default function About() {
         </section>
 
         {/* Testimonials Section */}
-        <section className="mb-16 text-center animate__animated animate__fadeInUp">
+        <section className="mb-16 md:px-[4%] text-center animate__animated animate__fadeInUp">
           <div className="text-center pb-10 px-0 mr-[4%] relative">
             <span className="absolute text-[#5f687b] left-0 right-0 z-10 font-bold text-[52px] uppercase">
               Testimonials

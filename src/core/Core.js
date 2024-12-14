@@ -46,7 +46,8 @@ const Core = () => {
           response.data?.data?.accessToken
         );
         console.log("LOG USER DATA : ", userDataresp);
-        console.log("orders Data:",userDataresp.orderData)
+        console.log("orders Data:",userDataresp.orderData);
+        console.log("orders Data:",userDataresp.walletData)
 
         if (userDataresp) {
           appContext.setUserInfo((prev) => ({
@@ -66,6 +67,8 @@ const Core = () => {
             appContext.setUserInfo((prev) => ({
               ...prev,
               wallet: userDataresp?.userData?.wallet,
+              firmName:userDataresp?.userData?.firmName,
+              walletHistory: userDataresp?.walletData,
             }));
           }
         }
