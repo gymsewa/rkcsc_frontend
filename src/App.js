@@ -11,6 +11,8 @@ import {
 } from "react-router-dom";
 
 import ProfileSection from "./components/ProfileSection";
+import Cards from "./components/Cards";
+import ProductDetail from "./components/ProductDetails";
 
 const local_storagePrefences = localStorage.getItem("PrefrenceVal");
 
@@ -84,6 +86,8 @@ function App() {
             }
           />
           <Route path="/profile" element={<ProfileSection />} />
+          <Route path="/" element={<Cards />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
         </Routes>
       </Router>
     </AppContext.Provider>

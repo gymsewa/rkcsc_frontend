@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Cards = () => {
   const products = [
@@ -39,6 +40,7 @@ const Cards = () => {
       price: "INR 850.00",
     },
   ];
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h2 className="text-3xl font-bold text-center mb-8 text-gray-800">
@@ -70,12 +72,14 @@ const Cards = () => {
                 <span className="text-lg font-bold text-gray-800">
                   {product.price}
                 </span>
-                <button className="group relative inline-block overflow-hidden rounded border-4 border-double border-grey-500 px-5 py-2 font-medium text-black-600">
-                  <span className="absolute left-0 top-0 mb-0 flex h-full w-0 translate-x-0 transform bg-zinc-700 opacity-90 transition-all duration-300 ease-out group-hover:w-full"></span>
-                  <span className="relative group-hover:text-white">
-                    ADD TO CART
-                  </span>
-                </button>
+                <Link to={`/product/${product.id}`}>
+                  <button className="group relative inline-block overflow-hidden rounded border-4 border-double border-grey-500 px-5 py-2 font-medium text-black-600">
+                    <span className="absolute left-0 top-0 mb-0 flex h-full w-0 translate-x-0 transform bg-zinc-700 opacity-90 transition-all duration-300 ease-out group-hover:w-full"></span>
+                    <span className="relative group-hover:text-white">
+                      VIEW DETAILS
+                    </span>
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
