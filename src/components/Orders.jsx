@@ -3,51 +3,7 @@ import AppContext from "../AppContext/AppContext";
 import clsx from "clsx";
 
 const Orders = () => {
-  const database = [
-    {
-      invoiceId: "#12345",
-      billingDate: "23 April 2024",
-      plan: "basic",
-      amount: "Rs. 20000",
-      status: "paid",
-    },
-    {
-      invoiceId: "#12345",
-      billingDate: "23 April 2024",
-      plan: "basic",
-      amount: "Rs. 20000",
-      status: "paid",
-    },
-    {
-      invoiceId: "#12345",
-      billingDate: "23 April 2024",
-      plan: "basic",
-      amount: "Rs. 20000",
-      status: "paid",
-    },
-    {
-      invoiceId: "#12345",
-      billingDate: "23 April 2024",
-      plan: "basic",
-      amount: "Rs. 20000",
-      status: "paid",
-    },
-    {
-      invoiceId: "#12345",
-      billingDate: "23 April 2024",
-      plan: "basic",
-      amount: "Rs. 20000",
-      status: "paid",
-    },
-    {
-      invoiceId: "#12345",
-      billingDate: "23 April 2024",
-      plan: "basic",
-      amount: "Rs. 20000",
-      status: "paid",
-    },
-  ];
-
+  
   const appContext = useContext(AppContext);
 
   return (
@@ -56,13 +12,15 @@ const Orders = () => {
         <thead className="bg-blue-500 text-gray-700 sticky top-0 z-10 text-lg">
           <tr>
             <th className="px-4 py-3">Serial No</th>
-            <th className="px-4 py-2">Order Date</th>
+            <th className="px-4 py-2">Date</th>
             <th className="px-4 py-2">Service</th>
             <th className="px-4 py-2">Applicant Name</th>
             <th className="px-4 py-2">Amount</th>
             <th className="px-4 py-2">Order Status</th>
             <th className="px-4 py-2">Payment Status</th>
             <th className="px-4 py-2">Acknowledgements</th>
+            <th className="px-4 py-2">Check Status</th>
+            <th className="px-4 py-2">Downloads</th>
           </tr>
         </thead>
         <tbody tbody className="overflow-y-auto max-h-[90%] text-black">
@@ -129,11 +87,14 @@ const Orders = () => {
                     </p>
                   </div>
                 </td>
+                <td className="px-4 py-4 text-center">Acknowledgement</td>
+                <td className="px-4 py-4 text-center">status</td>
+                <td className="px-4 py-4 text-center">Downloads</td>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={5} className="px-4 py-2 text-center">
+              <td colSpan={10} className="px-4 py-2 text-lg text-center">
                 No orders
               </td>
             </tr>

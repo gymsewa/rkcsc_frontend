@@ -5,12 +5,12 @@ const HeroSection = ({}) => {
   return (
     <>
       <div
-        className="min-h-[92vh] bg-white bg-cover bg-center bg-no-repeat"
+        className="md:min-h-[92vh] min-h-[80vh] bg-white bg-cover  bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${bgImage})` }}
       >
-        <div className="min-h-[92vh] bg-white/40">
-          <div className="container mx-auto px-[4%] py-12 md:py-24">
-            <div className="grid gap-8 lg:grid-cols-2 lg:gap-12 items-center">
+        <div className="md:min-h-[92vh] min-h-[80vh] flex justify-center items-center bg-white/40">
+          <div className="container flex justify-center items-center mx-auto px-[4%] py-12 md:py-24">
+            <div className=" md:w-[70%] w-full gap-8 lg:gap-12 items-center">
               <div className="space-y-6">
                 <h1 className="text-[#000080] tracking-wide text-4xl uppercase md:text-4xl lg:text-6xl font-bold leading-tight font-roboto">
                   WELCOME TO Rk Consultancy And CSC Services
@@ -20,16 +20,16 @@ const HeroSection = ({}) => {
                   Documents, Certificates & various other online applications,
                   guaranteeing a 100% accuracy everytime.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                  <button class="group relative inline-block overflow-hidden rounded border-4 border-double border-grey-500 px-2 py-1 font-medium text-black-600">
-                    <span class="absolute left-0 top-0 mb-0 flex h-full w-0 translate-x-0 transform bg-blue-800 opacity-90 transition-all duration-300 ease-out group-hover:w-full"></span>
-                    <span class="relative group-hover:text-white text-lg">
+                <div className="flex flex-col justify-center items-center sm:flex-row gap-4 pt-4">
+                  <button className="group relative inline-block overflow-hidden rounded border-4 border-double border-grey-500 px-2 py-1 font-medium text-black-600">
+                    <span className="absolute left-0 top-0 mb-0 flex h-full w-0 translate-x-0 transform bg-blue-800 opacity-90 transition-all duration-300 ease-out group-hover:w-full"></span>
+                    <span className="relative group-hover:text-white text-lg">
                       Why Choose Us ?
                     </span>
                   </button>
-                  <button class="group relative inline-block overflow-hidden rounded border-4 border-double border-grey-500 px-2 py-1 font-medium text-black-600">
-                    <span class="absolute left-0 top-0 mb-0 flex h-full w-0 translate-x-0 transform bg-blue-800 opacity-90 transition-all duration-300 ease-out group-hover:w-full"></span>
-                    <span class="relative group-hover:text-white text-lg">
+                  <button className="group relative inline-block overflow-hidden rounded border-4 border-double border-grey-500 px-2 py-1 font-medium text-black-600">
+                    <span className="absolute left-0 top-0 mb-0 flex h-full w-0 translate-x-0 transform bg-blue-800 opacity-90 transition-all duration-300 ease-out group-hover:w-full"></span>
+                    <span className="relative group-hover:text-white text-lg">
                       Explore Our Services
                     </span>
                   </button>

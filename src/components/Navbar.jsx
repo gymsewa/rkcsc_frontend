@@ -196,9 +196,9 @@ const Navbar = ({
   return (
     <>
       <div className={styles.Navbar} ref={navRef}>
-        <div className="flex justify-center items-center">
+        <Link to="/"className="flex justify-center items-center">
           <img src={logo} alt="Logo" className={styles.logo} />
-        </div>
+        </Link>
 
         {isMobile ? (
           <>

@@ -36,7 +36,7 @@ export const ProductCards = ({ product }) => {
       <div className="flex justify-between items-center px-4 py-3 mb-3">
         <span className="text-lg font-bold text-gray-800">{product.price}</span>
         <button className="bg-blue-500 text-white px-2 py-1 text-base rounded-md font-medium border border-blue-800 hover:bg-blue-700 transition-all duration-300 ease-in-out">
-          Add to Cart
+          Apply Now
         </button>
       </div>
     </div>

@@ -1,17 +1,35 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import axios from "axios";
 import AppContext from "../AppContext/AppContext";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Core = () => {
   const appContext = useContext(AppContext);
+  const navigate = useNavigate();
+
+  const notify = (text, time) => {
+    toast.dismiss();
+
+    toast.info(text, {
+      toastId: "random1",
+      closeButton: false,
+      position: "top-center",
+      autoClose: time ? time : 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  };
 
   const loginEmailPass = async (
     email,
     password,
     setSigninClicked,
-    setShowGlobalLoader,
-    setShowNotification,
-    setFailedNoti
+    setShowGlobalLoader
   ) => {
     console.log("Login attempt started");
     setShowGlobalLoader(true);
@@ -46,8 +64,8 @@ const Core = () => {
           response.data?.data?.accessToken
         );
         console.log("LOG USER DATA : ", userDataresp);
-        console.log("orders Data:",userDataresp.orderData);
-        console.log("orders Data:",userDataresp.walletData)
+        console.log("orders Data:", userDataresp.orderData);
+        console.log("orders Data:", userDataresp.walletData);
 
         if (userDataresp) {
           appContext.setUserInfo((prev) => ({
@@ -63,28 +81,28 @@ const Core = () => {
             sessionId: response.data?.data?.accessToken,
           }));
 
-          if(userDataresp?.userData?.accountType === "member") {
+          if (userDataresp?.userData?.accountType === "member") {
             appContext.setUserInfo((prev) => ({
               ...prev,
               wallet: userDataresp?.userData?.wallet,
-              firmName:userDataresp?.userData?.firmName,
+              firmName: userDataresp?.userData?.firmName,
               walletHistory: userDataresp?.walletData,
             }));
           }
-        }
 
+          if(userDataresp?.userData?.accountType === "admin") {
+            navigate("/admin");
+            notify("Admin Login Successfully", 2000);
+          }
+        }
+        
+        if(userDataresp?.userData?.accountType !== "admin") {
+          notify("Login Successfully", 2000);
+        }
         setSigninClicked(false);
         setShowGlobalLoader(false);
-        setShowNotification(true);
-        setTimeout(() => {
-          setShowNotification(false);
-        }, 3000);
       }
     } catch (error) {
-      setFailedNoti(true);
-      setTimeout(() => {
-        setFailedNoti(false);
-      }, 3000);
       console.error("Login Error:", {
         message: error.message,
         response: error.response ? error.response.data : "No response",
@@ -94,11 +112,13 @@ const Core = () => {
       if (error.response) {
         if (error.response.data.message === "Wrong Password!") {
           console.log("Are you sure that password was correct? 🥲");
+          notify("Are you sure that password was correct?", 2000);
         } else if (
           error.response.data.message ===
           "Email or username doesn't exist or not verified"
         ) {
           console.log(error.response.data.message);
+          notify(error.response.data.message, 2000);
         }
       } else if (error.request) {
         console.error("No response received from server");

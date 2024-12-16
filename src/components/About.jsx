@@ -82,7 +82,7 @@ const statistics = [
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen mt-10 bg-gray-50">
       {/* Header Section */}
       {/* <header className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-16">
         <div className="container mx-auto text-center px-4">
@@ -94,7 +94,7 @@ export default function About() {
       {/* Main Content */}
       <main className="container mx-auto px-4">
         {/* About Us Section */}
-        <section className="mb-16 text-center animate__animated animate__fadeIn bg-gradient-to-r from-blue-50 to-white py-12 rounded-xl shadow-lg">
+        <section className="mb-16 text-center animate__animated animate__fadeIn bg-gradient-to-r from-blue-100 to-blue-50 py-12 rounded-xl shadow-xl">
           <div className="text-center pb-10 px-0 mr-[4%] relative">
             <span className="absolute text-[#5f687b] left-0 right-0 z-10 font-bold text-[52px] uppercase">
               About Us
@@ -114,7 +114,7 @@ export default function About() {
         </section>
 
         {/* What We Do Section */}
-        <section className="mb-16 md:px-[4%] text-center animate__animated animate__fadeInUp bg-gradient-to-l from-blue-100 to-blue-200 py-12 rounded-xl shadow-xl">
+        <section className="mb-16 md:px-[4%] text-center animate__animated animate__fadeInUp bg-gradient-to-r from-blue-100 to-blue-50 py-12 rounded-xl shadow-xl">
           <h2 className="text-5xl font-semibold mb-6 text-blue-800">
             What We Do
           </h2>
@@ -134,7 +134,7 @@ export default function About() {
             {services.map((service, index) => (
               <div
                 key={index}
-                className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-transform transform hover:scale-105 flex flex-col items-center justify-center text-center"
+                className="bg-white p-6 rounded-lg shadow-xl hover:shadow-2xl transition-transform transform hover:scale-105 flex flex-col items-center justify-center text-center"
               >
                 {/* Render the icon dynamically and center it */}
                 <service.icon className="text-5xl text-blue-600 mb-4 transform transition-transform hover:rotate-12" />

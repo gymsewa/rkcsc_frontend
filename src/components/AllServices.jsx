@@ -1,7 +1,7 @@
 import React from "react";
 import ProductCards from "./ProductCards";
 import { Link } from "react-router-dom";
-const Cards = () => {
+const AllServices = () => {
   const products = [
     {
       id: 1,
@@ -78,7 +78,7 @@ const Cards = () => {
   ];
 
   return (
-    <div className="container relative mx-auto px-6 mt-10  bg-gradient-to-r from-blue-100 to-blue-50 py-10 pb-7 rounded-xl shadow-xl">
+    <div className="container relative mx-auto px-6   bg-gradient-to-r from-blue-100 to-blue-50 py-10 rounded-xl shadow-xl">
       <div className="text-center pb-10 px-0 mr-[4%] relative">
         <span className="absolute text-[#5f687b] left-0 right-0 z-10 font-bold text-[52px] uppercase">
           Services
@@ -94,18 +94,16 @@ const Cards = () => {
           </Link>
         ))}
       </div>
-      {/* <Link to="/services" className=" absolute bottom-1 left-[50%]">
-        View All
-      </Link> */}
+      
 
-      <div className="flex justify-center w-full items-center   mt-5">
+      {/* <div className="flex justify-center w-full items-center   mt-5">
         <Link to="/services" className="custom-btn btn-12">
           <span className="text-white">Click!</span>
           <span className="text-white">View All</span>
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };
 
-export default Cards;
+export default AllServices;

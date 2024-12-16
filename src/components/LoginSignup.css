@@ -191,7 +191,7 @@ input::placeholder {
   font-weight: 700;
   line-height: 1em;
   text-transform: uppercase;
-  color: #e8716d;
+  color: #1E40AF;
   letter-spacing: 0.1rem;
 }
 
@@ -300,7 +300,7 @@ input[type="file"] {
 }
 
 .user_options-forms .forms_buttons-action {
-  background-color: #e8716d;
+  background-color: #1E40AF;
   border-radius: 3px;
   padding: 10px 35px;
   font-size: 1rem;
@@ -314,7 +314,7 @@ input[type="file"] {
 }
 
 .user_options-forms .forms_buttons-action:hover {
-  background-color: #e14641;
+  background-color: #1E40AF;
 }
 
 .user_options-forms .user_forms-signup,

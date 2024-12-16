@@ -7,10 +7,12 @@ import {
   FaTwitter,
 } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
+import { Link } from "react-router-dom";
+import Logo from "../assets/LogoRkcsc.png";
 
 export default function Footer() {
   return (
-    <footer className="bg-blue-200 text-gray-900">
+    <footer className="bg-gradient-to-r from-blue-50 to-blue-100 mt-10  text-gray-900">
       {/* Contact Info Section */}
       <div className="container mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-8 border-b-2 border-[#2b2b2b]">
         <div className="flex items-center lg:justify-center gap-4">
@@ -43,20 +45,11 @@ export default function Footer() {
         {/* Logo Section */}
         <div className="md:col-span-1">
           <div className="flex items-center gap-2 mb-4">
-            <span className="text-3xl font-bold">
-              <span className="text-blue-800">R</span>
-              <span className="text-blue-800 mr-4">K</span>
-              <span className="text-gray-800">C</span>
-              <span className="text-gray-800">S</span>
-              <span className="text-gray-800">C</span>
-            </span>
-            {/* <div className="flex flex-col">
-              <span className="text-[#ff4800] text-xl">WEB</span>
-              <span className="text-white text-xl">DESIGNER</span>
-            </div> */}
+            <img src={Logo} alt="rkCSClogo" className="w-11 h-11"/>
+            <span className="text-base">Rk Consultancy And CSC Services</span>
           </div>
           <p className="text-sm">
-          <h6 className="font-bold">RK COMMON SERVICE CENTER</h6>
+          <h6 className="font-bold text-base">Rk Consultancy And CSC Services</h6>
           <p>We provide all types of Government, Semi-Government and Private Company Online Services with minimum cost</p>
           </p>
           <h3 className="text-black text-xl mt-8 mb-4">Follow us</h3>
@@ -92,30 +85,30 @@ export default function Footer() {
 
             <ul className="space-y-2">
               <li>
-                <a href="#" className="hover:text-[rgb(0,64,255)]">
+                <Link to="/" className="hover:text-[rgb(0,64,255)]">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-[rgb(0,64,255)]">
+                <Link to="/services" className="hover:text-[rgb(0,64,255)]">
                   Services
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="hover:text-[rgb(0,64,255)]">
+                <Link to="/about" className="hover:text-[rgb(0,64,255)]">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-[rgb(0,64,255)]">
                   Contact
-                </a>
+                </Link>
               </li>
-              <li>
-                <a href="#" className="hover:text-[rgb(0,64,255)]">
-                  Our Services
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-[rgb(0,64,255)]">
+              {/* <li>
+                <Link href="#" className="hover:text-[rgb(0,64,255)]">
                   Contact Us
-                </a>
-              </li>
+                </Link>
+              </li> */}
             </ul>
           </div>
           {/* <div>
