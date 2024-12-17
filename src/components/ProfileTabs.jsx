@@ -95,13 +95,6 @@ const ProfileTabs = () => {
         </button>
         <button
           onClick={handleBilling}
-          // className={clsx(
-          //   " px-4 rounded-lg text-slate-100 border-zinc-500 border-2 w-24 h-10 hover:scale-105 transition-all duration-300",
-          //   {
-          //     "bg-blue-800 text-slate-100": isClickedBilling === true,
-          //     "bg-zinc-800 ": isClickedBilling === false,
-          //   }
-          // )}
           className={clsx("tabButtons", {
             "bg-gradient-to-r from-[#007bff] to-[#00bfff]": isClickedBilling,
           })}
@@ -111,13 +104,6 @@ const ProfileTabs = () => {
         {appContext.userInfoVal.accountType === "member" && (
           <button
             onClick={handleWallet}
-            // className={clsx(
-            //   " px-4 rounded-lg text-slate-100 border-zinc-500 border-2  h-10 hover:scale-105 transition-all duration-300",
-            //   {
-            //     "bg-blue-800 text-slate-100": isWalletClicked === true,
-            //     "bg-zinc-800 ": isWalletClicked === false,
-            //   }
-            // )}
             className={clsx("tabButtons", {
               "bg-gradient-to-r from-[#007bff] to-[#00bfff]": isWalletClicked,
             })}
@@ -125,21 +111,14 @@ const ProfileTabs = () => {
             Wallet History
           </button>
         )}
-        <button
+        {appContext.userInfoVal.accountType !== "admin" &&<button
           onClick={handleSupport}
-          // className={clsx(
-          //   " px-4 rounded-lg text-slate-100 border-zinc-500 border-2 w-24 h-10 hover:scale-105 transition-all duration-300",
-          //   {
-          //     "bg-blue-800 text-slate-100": isClickedSupport === true,
-          //     "bg-zinc-800 ": isClickedSupport === false,
-          //   }
-          // )}
           className={clsx("tabButtons", {
             "bg-gradient-to-r from-[#007bff] to-[#00bfff]": isClickedSupport,
           })}
         >
           Support
-        </button>
+        </button>}
       </div>
       <div className=" flex w-full md:h-[63vh] h-[66vh] justify-center">
         {isClickedAccount && (

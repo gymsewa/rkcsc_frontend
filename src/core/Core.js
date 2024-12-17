@@ -91,7 +91,7 @@ const Core = () => {
           }
 
           if(userDataresp?.userData?.accountType === "admin") {
-            navigate("/admin");
+            navigate("/adminRk");
             notify("Admin Login Successfully", 2000);
           }
         }
@@ -288,9 +288,56 @@ const Core = () => {
     }
   };
 
+  const getAllUsers = async(userType) => {
+    console.log("all user called with", userType);
+
+    let config = {
+      method: "GET",
+      maxBodyLength: Infinity,
+      url: process.env.REACT_APP_BASE_URL + `/api/v1/admin/getAllUser/${userType}`,
+      headers: {
+        Authorization: `Bearer ${appContext.userInfoVal.sessionId}`,
+      },
+    };
+    try {
+      const response = await axios.request(config);
+      if (response.data?.data) {
+        // console.log("all user response",response.data?.data);
+        return response.data?.data;
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      return null;
+    }
+  };
+
+  const deleteAndVerify = async(userId,action) => {
+    console.log("all user called with", userId,action);
+
+    let config = {
+      method: "GET",
+      maxBodyLength: Infinity,
+      url: process.env.REACT_APP_BASE_URL + `/api/v1/admin/deleteUser/${userId}/${action}`,
+      headers: {
+        Authorization: `Bearer ${appContext.userInfoVal.sessionId}`,
+      },
+    };
+    try {
+      const response = await axios.request(config);
+      if (response.data?.data) {
+        return response.data?.data;
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      return null;
+    }
+  };
+
   return {
     loginEmailPass,
     signupEmailPass,
+    getAllUsers,
+    deleteAndVerify,
   };
 };
 export default Core;

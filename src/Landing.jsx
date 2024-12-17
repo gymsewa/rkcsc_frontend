@@ -25,27 +25,11 @@ const Landing = ({
   setFailedNoti,
   setShowNotification,
 }) => {
-  const [showGlobalLoader, setShowGlobalLoader] = useState(false);
+
 
   return (
     <div className="relative">
-      {showGlobalLoader && <Loader />}
-      {signinClicked && (
-        <LoginSignup
-          navRef={navRef}
-          setSigninClicked={setSigninClicked}
-          setUserSignUp={setUserSignUp}
-          userSignUp={userSignUp}
-          signinClicked={signinClicked}
-          memberSignUp={memberSignUp}
-          setMemberSignUp={setMemberSignUp}
-          setIsSignup={setIsSignup}
-          isSignup={isSignup}
-          setShowGlobalLoader={setShowGlobalLoader}
-          setShowNotification = {setShowNotification}
-          setFailedNoti = {setFailedNoti}
-        />
-      )}
+      
       <HeroSection />
       <Cards />
       <About />

@@ -65,7 +65,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background-color: #4f37a7; /* Change Color Here */
+  background-color: #4f37a7;
   transform: scaleY(0);
   transform-origin: bottom;
   transition: transform 0.3s ease;
@@ -75,6 +75,11 @@
   transform: scaleY(1);
 }
 
+.activeNavItem {
+  color: blue; /* Change to your desired active color */
+  font-weight: 700;
+  /* Add any other styling you want for the active nav item */
+}
 
 .navList li a {
   text-decoration: none;

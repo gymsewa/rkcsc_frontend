@@ -65,15 +65,13 @@ const Navbar = ({
       setIsAnimating(true);
       setIsMenuOpen(false);
 
-      // Remove animation after it completes
       setTimeout(() => {
         setIsAnimating(false);
-      }, 500); // Should match the animation duration
+      }, 500); 
     } else {
       setIsAnimating(true);
       setIsMenuOpen(true);
 
-      // Remove animation state after it completes
       setTimeout(() => {
         setIsAnimating(false);
       }, 500);
@@ -88,20 +86,24 @@ const Navbar = ({
     }
   };
 
+  const isActiveRoute = (path) => {
+    return location.pathname === path;
+  };
+
   const renderNavItems = () => (
     <ul
       className={`${styles.navList} ${isMenuOpen ? styles.mobileNavList : ""}`}
     >
-      <li>
+      <li className={isActiveRoute('/') ? styles.activeNavItem : ''}>
         <Link to="/">Home</Link>
       </li>
-      <li>
+      <li className={isActiveRoute('/services') ? styles.activeNavItem : ''}>
         <Link to="/services">Services</Link>
       </li>
-      <li>
+      <li className={isActiveRoute('/about') ? styles.activeNavItem : ''}>
         <Link to="/about">About Us</Link>
       </li>
-      <li>
+      <li className={isActiveRoute('/contact') ? styles.activeNavItem : ''}>
         <Link to="/contact">Contact Us</Link>
       </li>
     </ul>
