@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext,useState } from "react";
 import AppContext from "../AppContext/AppContext";
 import clsx from "clsx";
 import DeleteUser from "../assets/deleteUser.png";
@@ -9,6 +9,8 @@ import { toast } from "react-toastify";
 
 const MemberTable = ({ memberData, getUserData }) => {
   const { deleteAndVerify } = Core();
+
+  const [showDelete, setShowDelete] = useState(false);
 
   const notify = (text, time) => {
     toast.dismiss();
@@ -31,32 +33,33 @@ const MemberTable = ({ memberData, getUserData }) => {
     try {
       const response = await deleteAndVerify(userId, action);
       if (response) {
-        
-        if(action ==="updated") {
-            notify("Member approved successfully.", 2000);
-        }else {
-            notify("Member deleted successfully.", 2000);
+        if (action === "updated") {
+          notify("Member approved successfully.", 2000);
+        } else {
+          notify("Member deleted successfully.", 2000);
         }
         getUserData("member");
+        setShowDelete(false);
       }
     } catch (error) {
       console.error(error);
     } finally {
+      setShowDelete(false);
     }
   };
 
-//   const handleVerifyMember = async (userId, action) => {
-//     try {
-//       const response = await deleteAndVerify(userId, action);
-//       if (response) {
-//         notify("Sucessfully deleted member", 2000);
-//         getUserData("member");
-//       }
-//     } catch (error) {
-//       console.error(error);
-//     } finally {
-//     }
-//   };
+  //   const handleVerifyMember = async (userId, action) => {
+  //     try {
+  //       const response = await deleteAndVerify(userId, action);
+  //       if (response) {
+  //         notify("Sucessfully deleted member", 2000);
+  //         getUserData("member");
+  //       }
+  //     } catch (error) {
+  //       console.error(error);
+  //     } finally {
+  //     }
+  //   };
 
   return (
     <div className="w-full h-full mx-auto">
@@ -152,13 +155,43 @@ const MemberTable = ({ memberData, getUserData }) => {
                 <td className="px-4 py-4 text-center justify-center items-center flex">
                   <img
                     onClick={() => {
-                      handleDeleteUser(memberData?._id, "deleted");
+                      setShowDelete(true);
                     }}
                     src={DeleteUser}
                     alt="deleteUserIcon"
                     className="w-8 h-8 cursor-pointer hover:scale-105 transition-all duration-150"
                   />
                 </td>
+                {showDelete && (
+                  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                    <div className="rounded-lg backdrop  bg-opacity-10 bg-gradient-to-b from-gray-500/50 to-gray-900/50 backdrop-blur-md border border-slate-500 shadow-lg  animate-fadeIn p-5">
+                      <h2 className="text-lg font-bold mb-1 text-slate-100">
+                        Confirm Delete
+                      </h2>
+                      <p className="mb-4 text-zinc-400 text-base">
+                        Are you sure you want to delete this user?
+                      </p>
+                      <div className="flex justify-end">
+                        <button
+                          className="bg-red-500 text-white px-4 py-2 rounded-md mr-2"
+                          onClick={() => {
+                            handleDeleteUser(memberData?._id, "deleted");
+                          }}
+                        >
+                          Yes
+                        </button>
+                        <button
+                          className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md"
+                          onClick={() => {
+                            setShowDelete(false);
+                          }}
+                        >
+                          No
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </tr>
             ))
           ) : (

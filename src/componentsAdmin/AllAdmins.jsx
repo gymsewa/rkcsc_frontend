@@ -4,8 +4,14 @@ import { MdDelete } from "react-icons/md";
 import { RiChatNewLine } from "react-icons/ri";
 import { CiCirclePlus } from "react-icons/ci";
 import { toast } from "react-toastify";
+import { LuCrown } from "react-icons/lu";
 
-const AllAdmins = ({ getUserData, allAdmins }) => {
+const AllAdmins = ({
+  getUserData,
+  allAdmins,
+  setCreateAdmin,
+  setShowDetails,
+}) => {
   const notify = (text, time) => {
     toast.dismiss();
 
@@ -31,6 +37,9 @@ const AllAdmins = ({ getUserData, allAdmins }) => {
               className=" bg-blue-400 h-52 w-48 rounded-2xl bg-clip-padding border border-gray-100 
                  flex flex-col items-center justify-center gap-2 text-black text-xl 
                  font-bold cursor-pointer hover:scale-105 transition-all duration-150"
+              onClick={() => {
+                setShowDetails(true);
+              }}
             >
               <div className="w-[45%] h-[40%] rounded-full flex bg-white justify-center items-center overflow-hidden">
                 <img
@@ -46,9 +55,14 @@ const AllAdmins = ({ getUserData, allAdmins }) => {
                   {admins?.firstName?.split(" ")[0]}
                 </span>
                 <span className="text-base text-gray-800">
-                  {admins?.accountType === "admin"
-                    ? "Super Admin"
-                    : "Sub Admin"}
+                  {admins?.accountType === "admin" ? (
+                    <span className="flex justify-center items-center gap-2">
+                      <LuCrown />
+                      Super Admin
+                    </span>
+                  ) : (
+                    "Sub Admin"
+                  )}
                 </span>
               </span>
               {admins?.accountType !== "admin" && (
@@ -63,6 +77,9 @@ const AllAdmins = ({ getUserData, allAdmins }) => {
         className=" bg-blue-300 h-52 w-44 rounded-2xl bg-clip-padding border border-gray-100 
                  flex flex-col items-center justify-center gap-4 text-black text-xl 
                  font-bold cursor-pointer hover:scale-105 transition-all duration-150"
+        onClick={() => {
+          setCreateAdmin(true);
+        }}
       >
         <CiCirclePlus className="h-20 w-20 text-black " />
       </div>

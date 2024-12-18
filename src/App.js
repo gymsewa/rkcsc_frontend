@@ -75,7 +75,7 @@ function App() {
   const ProtectedAdminRoute = ({ children }) => {
     const appContext = React.useContext(AppContext);
 
-    return appContext.userInfoVal.accountType === "admin" ? (
+    return appContext.userInfoVal.accountType === "admin" || appContext.userInfoVal.accountType === "pseudoAdmin" ? (
       children
     ) : (
       <Navigate to="/" replace />

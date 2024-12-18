@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import clsx from "clsx";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { MdFileDownload } from "react-icons/md";
@@ -22,11 +22,14 @@ import UsersTable from "./UsersTable";
 import MemberTable from "./MemberTable";
 import Loader2 from "./Loader2";
 import AllAdmins from "./AllAdmins";
+import { IoClose } from "react-icons/io5";
 
 const ManageUsers = () => {
   const appContext = useContext(AppContext);
   const navigate = useNavigate();
   const { getAllUsers } = Core();
+  const detailsRef = useRef(null);
+  const createAdminRef = useRef(null);
   const [isAllUsersClicked, setIsAllUsersClicked] = useState(true);
   const [isAllMemberClicked, setIsAllMemberClicked] = useState(false);
   const [isAllAdminClicked, setIsAllAdminClicked] = useState(false);
@@ -34,6 +37,8 @@ const ManageUsers = () => {
   const [allMembers, setAllMembers] = useState(null);
   const [allAdmins, setAllAdmins] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
+  const [createAdmin, setCreateAdmin] = useState(false);
 
   const getUserData = async (userType) => {
     setIsLoading(true);
@@ -49,7 +54,7 @@ const ManageUsers = () => {
             setAllUsers(allUsersData);
           } else if (userType === "member") {
             setAllMembers(allUsersData);
-          } else if(userType === "admin") {
+          } else if (userType === "admin") {
             setAllAdmins(allUsersData);
           }
           setIsLoading(false);
@@ -87,6 +92,32 @@ const ManageUsers = () => {
     getUserData("user");
   }, []);
 
+  useEffect(() => {
+    const handleClose = (e) => {
+      if (detailsRef.current && !detailsRef.current.contains(e.target)) {
+        setShowDetails(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClose);
+    return () => {
+      document.removeEventListener("mousedown", handleClose);
+    };
+  }, [detailsRef]);
+
+  useEffect(() => {
+    const handleClose = (e) => {
+      if (createAdminRef.current && !createAdminRef.current.contains(e.target)) {
+        setCreateAdmin(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClose);
+    return () => {
+      document.removeEventListener("mousedown", handleClose);
+    };
+  }, [createAdminRef]);
+
   return (
     <>
       <div
@@ -121,7 +152,7 @@ const ManageUsers = () => {
             All Admins
           </button>
         </div>
-        <div className=" flex w-full md:h-[63vh] h-[66vh] justify-center">
+        <div className=" flex w-full md:h-[69.5vh] h-[66vh] justify-center">
           {isAllUsersClicked ? (
             <div className="flex  flex-col h-full w-full gap-4">
               <div
@@ -134,7 +165,10 @@ const ManageUsers = () => {
                     <Loader2 />
                   </div>
                 ) : allUsers?.length > 0 ? (
-                  <UsersTable getUserData= {getUserData} allUsers={allUsers} />
+                  <UsersTable
+                    getUserData={getUserData}
+                    allUsers={allUsers}
+                  />
                 ) : (
                   <span className="flex justify-center items-center text-xl font-bold h-full text-black">
                     {" "}
@@ -158,7 +192,10 @@ const ManageUsers = () => {
                     <Loader2 />
                   </div>
                 ) : allMembers?.length > 0 ? (
-                  <MemberTable getUserData= {getUserData} memberData={allMembers} />
+                  <MemberTable
+                    getUserData={getUserData}
+                    memberData={allMembers}
+                  />
                 ) : (
                   <span className="flex justify-center items-center text-xl font-bold h-full text-black">
                     {" "}
@@ -182,7 +219,12 @@ const ManageUsers = () => {
                     <Loader2 />
                   </div>
                 ) : allAdmins?.length > 0 ? (
-                  <AllAdmins getUserData= {getUserData} allAdmins= {allAdmins}/>
+                  <AllAdmins
+                    getUserData={getUserData}
+                    allAdmins={allAdmins}
+                    setShowDetails={setShowDetails}
+                    setCreateAdmin = {setCreateAdmin}
+                  />
                 ) : (
                   <span className="flex justify-center items-center text-xl font-bold h-full text-black">
                     {" "}
@@ -194,6 +236,42 @@ const ManageUsers = () => {
             </div>
           ) : null}
         </div>
+
+        {showDetails && (
+          <div className="fixed top-[10%] inset-0 z-40 flex justify-center items-center bg-black bg-opacity-50">
+            <div
+              className="relative p-8 rounded-lg h-5/6 w-1/2 bg-stone-600 text-slate-200 "
+              ref={detailsRef}
+            >
+              <button
+                className="absolute flex text-white justify-center items-center right-[1%] top-[1%]"
+                onClick={() => {
+                  setShowDetails(false);
+                }}
+              >
+                <IoClose className="text-2xl" />
+              </button>
+            </div>
+          </div>
+        )}
+
+        {createAdmin && (
+          <div className="fixed top-[10%] inset-0 z-40 flex justify-center items-center bg-black bg-opacity-50">
+            <div
+              className="relative p-8 rounded-lg h-5/6 w-1/2 bg-stone-600 text-slate-200 "
+              ref={createAdminRef}
+            >
+              <button
+                className="absolute flex text-white justify-center items-center right-[1%] top-[1%]"
+                onClick={() => {
+                  setCreateAdmin(false);
+                }}
+              >
+                <IoClose className="text-2xl" />
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );

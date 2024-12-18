@@ -90,13 +90,16 @@ const Core = () => {
             }));
           }
 
-          if(userDataresp?.userData?.accountType === "admin") {
+          if (
+            userDataresp?.userData?.accountType === "admin" ||
+            appContext.userInfoVal.accountType === "pseudoAdmin"
+          ) {
             navigate("/adminRk");
             notify("Admin Login Successfully", 2000);
           }
         }
-        
-        if(userDataresp?.userData?.accountType !== "admin") {
+
+        if (userDataresp?.userData?.accountType !== "admin") {
           notify("Login Successfully", 2000);
         }
         setSigninClicked(false);
@@ -112,7 +115,7 @@ const Core = () => {
       if (error.response) {
         if (error.response.data.message === "Wrong Password!") {
           console.log("Are you sure that password was correct? 🥲");
-          notify("Are you sure that password was correct?", 2000);
+          notify("Are you sure that password was correct? 🥲", 2000);
         } else if (
           error.response.data.message ===
           "Email or username doesn't exist or not verified"
@@ -218,6 +221,7 @@ const Core = () => {
 
           setSigninClicked(false);
           setShowGlobalLoader(false);
+          notify("Signed up successfully!", 2000);
         } else if (response.data.data) {
           console.log("Here is the payment link", response.data.data);
           const paymentUrl = response.data.data;
@@ -236,6 +240,22 @@ const Core = () => {
         response: error.response ? error.response.data : "No response",
         status: error.response ? error.response.status : "No status",
       });
+      if (
+        error.response.data.message &&
+        error.response.data.message.includes(
+          "account already exists with phoneNumber"
+        )
+      ) {
+        notify("Account already exists with this phoneNumber", 2000);
+      }
+      if (
+        error.response.data.message &&
+        error.response.data.message.includes(
+          "account already exists with email"
+        )
+      ) {
+        notify("Account already exists with this email", 2000);
+      }
 
       if (error.response) {
         console.error("Bad Request: ", error.response.data.message);
@@ -288,13 +308,16 @@ const Core = () => {
     }
   };
 
-  const getAllUsers = async(userType) => {
+  //Admin Endpoints
+
+  const getAllUsers = async (userType) => {
     console.log("all user called with", userType);
 
     let config = {
       method: "GET",
       maxBodyLength: Infinity,
-      url: process.env.REACT_APP_BASE_URL + `/api/v1/admin/getAllUser/${userType}`,
+      url:
+        process.env.REACT_APP_BASE_URL + `/api/v1/admin/getAllUser/${userType}`,
       headers: {
         Authorization: `Bearer ${appContext.userInfoVal.sessionId}`,
       },
@@ -311,13 +334,15 @@ const Core = () => {
     }
   };
 
-  const deleteAndVerify = async(userId,action) => {
-    console.log("all user called with", userId,action);
+  const deleteAndVerify = async (userId, action) => {
+    console.log("all user called with", userId, action);
 
     let config = {
       method: "GET",
       maxBodyLength: Infinity,
-      url: process.env.REACT_APP_BASE_URL + `/api/v1/admin/deleteUser/${userId}/${action}`,
+      url:
+        process.env.REACT_APP_BASE_URL +
+        `/api/v1/admin/deleteUser/${userId}/${action}`,
       headers: {
         Authorization: `Bearer ${appContext.userInfoVal.sessionId}`,
       },
@@ -333,11 +358,58 @@ const Core = () => {
     }
   };
 
+  const getAdminAllOrders = async (
+    paymentFilter = null,
+    orderFilter = "All"
+  ) => {
+    try {
+      // Prepare query parameters
+      const queryParams = new URLSearchParams();
+
+      // Add payment filter if specified
+      if (paymentFilter) {
+        queryParams.append("payment", paymentFilter);
+      }
+
+      // Add order status filter if specified and not "All"
+      if (orderFilter !== "All") {
+        queryParams.append("order", orderFilter);
+      }
+
+      // Construct the URL with query parameters
+      const url = `${process.env.REACT_APP_BASE_URL}/api/v1/order/pseudo${
+        queryParams.toString() ? `?${queryParams.toString()}` : ""
+      }`;
+      
+      console.log("endpoint",url);
+
+      const config = {
+        method: "GET",
+        url: url,
+        headers: {
+          Authorization: `Bearer ${appContext.userInfoVal.sessionId}`,
+        },
+      };
+
+      const response = await axios.request(config);
+
+      if (response.data?.data?.orderList) {
+        return response.data.data;
+      }
+
+      return null;
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+      return null;
+    }
+  };
+
   return {
     loginEmailPass,
     signupEmailPass,
     getAllUsers,
     deleteAndVerify,
+    getAdminAllOrders,
   };
 };
 export default Core;

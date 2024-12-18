@@ -111,7 +111,7 @@ const ProfileTabs = () => {
             Wallet History
           </button>
         )}
-        {appContext.userInfoVal.accountType !== "admin" &&<button
+        {appContext.userInfoVal.accountType !== "admin" || appContext.userInfoVal.accountType === "pseudoAdmin" &&<button
           onClick={handleSupport}
           className={clsx("tabButtons", {
             "bg-gradient-to-r from-[#007bff] to-[#00bfff]": isClickedSupport,
