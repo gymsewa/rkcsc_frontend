@@ -5,16 +5,16 @@ import {
   FaListAlt,
   FaCheckCircle,
   FaRegNewspaper,
-} from "react-icons/fa"; 
+} from "react-icons/fa";
 
 const ProductDetail = () => {
-  const { id } = useParams(); 
+  const { id } = useParams();
   const products = [
     {
       id: 1,
       title: "Pan Card New (Individual)",
       description:
-        "Permanent Account Number is known as PAN in short, and in simple words it is a 10-digit alphanumeric character used for identifying an entity. The Income Tax Department of India is responsible for issuing PAN in India, which is imprinted on a card hence known as PAN Card. Although the card is used mainly in taxation purposes, it also serves as a photo identity card.",
+        "Permanent Account Number is known as PAN in short, and in simple words it is a 10-digit alphanumeric character used for identifying an entity. The Income Tax Department of India is responsible for issuing PAN in India, which is imprinted on a card hence known as PAN Card. Although the card is used mainly in taxation purposes it also serves as a photo identity card",
       requiredDocuments: [
         "Applicant Photo",
         "Applicant Adhaar Card’s Front Side",
@@ -29,12 +29,13 @@ const ProductDetail = () => {
         "E-Pan Card Will be Delivered to Registered Email After 7-10 days",
         "Hard Copy of pan card will be delivered through Speed post on Your Aadhar address within 20-25 days",
       ],
+      imageUrl: "https://via.placeholder.com/150x350", // Example image URL with the new size
     },
     {
       id: 2,
       title: "Pan Card Correction (Individual)",
       description:
-        "If you've made an error in your PAN Card details, you can apply for a PAN correction. It is important to ensure all your information is accurate for taxation and financial records.",
+        "Permanent Account Number is known as PAN in short, and in simple words it is a 10-digit alphanumeric character used for identifying an entity. The Income Tax Department of India is responsible for issuing PAN in India, which is imprinted on a card hence known as PAN Card. Although the card is used mainly in taxation purposes it also serves as a photo identity card.",
       requiredDocuments: [
         "PAN Card Copy",
         "Proof of Identity",
@@ -48,6 +49,7 @@ const ProductDetail = () => {
         "Download the Acknowledgement Receipt",
         "New PAN Card will be delivered to your address after correction.",
       ],
+      imageUrl: "https://via.placeholder.com/150x350", // Example image URL with the new size
     },
     {
       id: 3,
@@ -61,6 +63,7 @@ const ProductDetail = () => {
         "Verify OTP Sent to Registered Mobile Number",
         "Successfully Link PAN with Aadhaar",
       ],
+      imageUrl: "https://via.placeholder.com/150x350", // Example image URL with the new size
     },
     {
       id: 4,
@@ -79,6 +82,7 @@ const ProductDetail = () => {
         "Pay the Insurance Premium",
         "Receive your Insurance Policy and Certificate",
       ],
+      imageUrl: "https://via.placeholder.com/150x350", // Example image URL with the new size
     },
   ];
 
@@ -89,10 +93,35 @@ const ProductDetail = () => {
     <div className="container mx-auto px-6 py-8">
       {product ? (
         <div className="bg-white rounded-lg shadow-lg p-8 mb-8 border border-gray-200">
-          <h1 className="text-3xl font-bold text-gray-800 mb-4">
-            {product.title}
-          </h1>
-          <p className="text-lg text-gray-600 mb-6">{product.description}</p>
+          <section className="container mx-auto px-4 py-12">
+            <div className="flex flex-col lg:flex-row items-center justify-between">
+              <div className="lg:w-1/2 space-y-6">
+                <h1 className="text-4xl lg:text-5xl font-bold text-[#000080] leading-tight">
+                  {product.title}
+                </h1>
+                <p className="text-gray-700 text-lg leading-relaxed">
+                  {product.description}
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                  <button className="group relative inline-block overflow-hidden rounded border-4 border-double border-grey-500 px-4 py-1 font-medium text-black-600">
+                    <span className="absolute left-0 top-0 mb-0 flex h-full w-0 translate-x-0 transform bg-gray-800 opacity-90 transition-all duration-300 ease-out group-hover:w-full"></span>
+                    <span className="relative group-hover:text-white text-lg">
+                      Apply Now
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div className="lg:w-1/2 mt-8 lg:mt-0">
+                <img
+                  src="https://paytmblogcdn.paytm.com/wp-content/uploads/2021/07/PANCard_32_What-is-PAN-Card-Fee-Know-Everything-About-It-800x500.jpg"
+                  alt="Service Center Illustration"
+                  width={450}
+                  height={300}
+                  className="w-full h-auto rounded-3xl"
+                />
+              </div>
+            </div>
+          </section>
 
           {/* Required Documents Section */}
           <div className="mb-6">

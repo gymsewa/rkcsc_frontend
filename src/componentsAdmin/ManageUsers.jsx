@@ -107,7 +107,10 @@ const ManageUsers = () => {
 
   useEffect(() => {
     const handleClose = (e) => {
-      if (createAdminRef.current && !createAdminRef.current.contains(e.target)) {
+      if (
+        createAdminRef.current &&
+        !createAdminRef.current.contains(e.target)
+      ) {
         setCreateAdmin(false);
       }
     };
@@ -165,10 +168,7 @@ const ManageUsers = () => {
                     <Loader2 />
                   </div>
                 ) : allUsers?.length > 0 ? (
-                  <UsersTable
-                    getUserData={getUserData}
-                    allUsers={allUsers}
-                  />
+                  <UsersTable getUserData={getUserData} allUsers={allUsers} />
                 ) : (
                   <span className="flex justify-center items-center text-xl font-bold h-full text-black">
                     {" "}
@@ -220,10 +220,12 @@ const ManageUsers = () => {
                   </div>
                 ) : allAdmins?.length > 0 ? (
                   <AllAdmins
+                    createAdminRef={createAdminRef}
+                    createAdmin={createAdmin}
                     getUserData={getUserData}
                     allAdmins={allAdmins}
                     setShowDetails={setShowDetails}
-                    setCreateAdmin = {setCreateAdmin}
+                    setCreateAdmin={setCreateAdmin}
                   />
                 ) : (
                   <span className="flex justify-center items-center text-xl font-bold h-full text-black">
@@ -255,7 +257,7 @@ const ManageUsers = () => {
           </div>
         )}
 
-        {createAdmin && (
+        {/* {createAdmin && (
           <div className="fixed top-[10%] inset-0 z-40 flex justify-center items-center bg-black bg-opacity-50">
             <div
               className="relative p-8 rounded-lg h-5/6 w-1/2 bg-stone-600 text-slate-200 "
@@ -271,7 +273,7 @@ const ManageUsers = () => {
               </button>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </>
   );

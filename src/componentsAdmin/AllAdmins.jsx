@@ -5,12 +5,15 @@ import { RiChatNewLine } from "react-icons/ri";
 import { CiCirclePlus } from "react-icons/ci";
 import { toast } from "react-toastify";
 import { LuCrown } from "react-icons/lu";
+import { IoClose } from "react-icons/io5";
 
 const AllAdmins = ({
   getUserData,
   allAdmins,
   setCreateAdmin,
   setShowDetails,
+  createAdminRef,
+  createAdmin,
 }) => {
   const notify = (text, time) => {
     toast.dismiss();
@@ -68,6 +71,27 @@ const AllAdmins = ({
               {admins?.accountType !== "admin" && (
                 <div className="flex gap-8 items-center justify-center">
                   <MdDelete className="cursor-pointer text-3xl hover:scale-110 transition-all duration-300 hover:text-red-600" />
+                </div>
+              )}
+              {createAdmin && (
+                <div className="fixed top-[10%] inset-0 z-40 flex justify-center items-center bg-black bg-opacity-50">
+                  <div
+                    className="relative p-8 rounded-lg h-5/6 w-1/2 bg-stone-600 text-slate-200 "
+                    ref={createAdminRef}
+                  >
+                    <button
+                      className="absolute flex text-white justify-center items-center right-[1%] top-[1%]"
+                      onClick={() => {
+                        setCreateAdmin(false);
+                      }}
+                    >
+
+                      <IoClose className="text-2xl" />
+                    </button>
+                    <span className="text-lg text-white">
+                  {admins?.firstName?.split(" ")[0]}
+                </span>
+                  </div>
                 </div>
               )}
             </div>
